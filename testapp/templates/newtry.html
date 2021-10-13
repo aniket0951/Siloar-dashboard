@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documenent</title>
+
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="sidebar" id="main">
+      <div class="logo_content">
+        <div class="logo">
+          <i class="bx bxl-android"></i>
+          <div class="logo_name">Voila Sailor</div>
+        </div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
+
+      <ul class="nav_list">
+        <li>
+          <a href="#">
+            <i class="bx bx-search"></i>
+            <input type="text" placeholder="Search....." />
+          </a>
+               <span class="tooltip">Search</span>
+        </li>
+
+        <li>
+          <a href="newtry">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Driver Request</span>
+          </a>
+               <span class="tooltip">Driver Request</span>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bx bx-chat"></i>
+            <span class="links_name">Restaurant Request</span>
+          </a>
+               <span class="tooltip">Res Request</span>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bx bxs-pie-chart"></i>
+            <span class="links_name">Notification</span>
+          </a>
+               <span class="tooltip">Notification</span>
+        </li>
+<!-- 
+        <li>
+          <a href="#">
+            <i class="bx bx-folder"></i> 
+            <span class="links_name">Settings</span>
+          </a>
+               <span class="tooltip">Settings</span>
+        </li> -->
+
+        <li>
+          <a href="#">
+            <i class="bx bx-cart"></i>
+            <span class="links_name">Order</span>
+          </a>
+               <span class="tooltip">Order</span>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bx bxs-heart"></i>
+            <span class="links_name">Save</span>
+          </a>
+               <span class="tooltip">Save</span>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bx bx-cog"></i>
+            <span class="links_name">Settings</span>
+          </a>
+               <span class="tooltip">Settings</span>
+        </li>
+      </ul>
+
+      <div class="profile_content">
+        <div class="profile">
+          <div class="profile_details">
+            <img src="" alt="" />
+            <div class="name_job">
+              <div class="name">Aniket Suryawanshi</div>
+              <div class="job">Android Developer</div>
+            </div>
+          </div>
+          <i class="bx bx-log-out" id="log_out"></i>
+        </div>
+      </div>
+    </div>
+    <div class="home_content">
+      <div class="text">
+        User Conteent
+      </div>
+    </div>
+
+    <script>
+      let btn = document.querySelector("#btn");
+      let sidebar = document.querySelector(".sidebar");
+      let searchBtn = document.querySelector(".bx-search");
+
+      btn.onclick = function(){
+        sidebar.classList.toggle("active");
+      }
+      searchBtn.onclick = function() {
+        sidebar.classList.toggle("active");
+      }
+
+    </script>
+
+  </body>
+</html>
