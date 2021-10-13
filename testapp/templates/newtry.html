@@ -28,55 +28,31 @@
             <i class="bx bx-search"></i>
             <input type="text" placeholder="Search....." />
           </a>
-               <span class="tooltip">Search</span>
+          <span class="tooltip">Search</span>
         </li>
 
         <li>
           <a href="newtry">
-            <i class="bx bx-user"></i>
+            <i class="bx bxs-car"></i>
             <span class="links_name">Driver Request</span>
           </a>
-               <span class="tooltip">Driver Request</span>
+          <span class="tooltip">Driver Request</span>
         </li>
 
         <li>
           <a href="#">
-            <i class="bx bx-chat"></i>
+            <i class="bx bx-restaurant"></i>
             <span class="links_name">Restaurant Request</span>
           </a>
-               <span class="tooltip">Res Request</span>
+          <span class="tooltip">Res Request</span>
         </li>
 
         <li>
           <a href="#">
-            <i class="bx bxs-pie-chart"></i>
+            <i class="bx bxs-bell"></i>
             <span class="links_name">Notification</span>
           </a>
-               <span class="tooltip">Notification</span>
-        </li>
-<!-- 
-        <li>
-          <a href="#">
-            <i class="bx bx-folder"></i> 
-            <span class="links_name">Settings</span>
-          </a>
-               <span class="tooltip">Settings</span>
-        </li> -->
-
-        <li>
-          <a href="#">
-            <i class="bx bx-cart"></i>
-            <span class="links_name">Order</span>
-          </a>
-               <span class="tooltip">Order</span>
-        </li>
-
-        <li>
-          <a href="#">
-            <i class="bx bxs-heart"></i>
-            <span class="links_name">Save</span>
-          </a>
-               <span class="tooltip">Save</span>
+          <span class="tooltip">Notification</span>
         </li>
 
         <li>
@@ -84,7 +60,15 @@
             <i class="bx bx-cog"></i>
             <span class="links_name">Settings</span>
           </a>
-               <span class="tooltip">Settings</span>
+          <span class="tooltip">Settings</span>
+        </li>
+
+        <li>
+          <a href="#">
+            <i class="bx bxs-help-circle"></i>
+            <span class="links_name">Help</span>
+          </a>
+          <span class="tooltip">Help</span>
         </li>
       </ul>
 
@@ -101,25 +85,34 @@
         </div>
       </div>
     </div>
+
     <div class="home_content">
-      <div class="text">
-        User Conteent
-      </div>
+      <div class="text">User content</div>
+      <button type="button" onclick="myFunction()">Hide content of p</button>
+      <button type="button" onclick="showProgress()">Show Progress bar</button>
+      <div class="loader" id="myP"></div>
     </div>
+
+   
 
     <script>
       let btn = document.querySelector("#btn");
       let sidebar = document.querySelector(".sidebar");
       let searchBtn = document.querySelector(".bx-search");
 
-      btn.onclick = function(){
+      btn.onclick = function () {
         sidebar.classList.toggle("active");
-      }
-      searchBtn.onclick = function() {
+      };
+      searchBtn.onclick = function () {
         sidebar.classList.toggle("active");
+      };
+      function myFunction() {
+        document.getElementById("myP").style.visibility = "hidden";
       }
 
+      function showProgress() {
+        document.getElementById("myP").style.visibility = "visible  ";
+      }
     </script>
-
   </body>
 </html>

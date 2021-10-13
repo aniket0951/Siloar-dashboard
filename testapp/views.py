@@ -43,4 +43,4 @@ def remove(request):
     return HttpResponse(reqParam)
 
 def newtry(request):
-    return render(request, 'newtry.html')
+    return render(request, 'progress.html')
