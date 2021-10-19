@@ -127,7 +127,9 @@
           text-decoration: none;
           height: 50px;
           width: 50px;
-     
+        }
+        .list_graph {
+          margin-top: 150px;
         }
       </style>
     </head>
@@ -223,7 +225,11 @@
         <div class="row">
           <div class="card col-lg-3">
             <img src="/static/image/total_customer.png" alt="Avatar" />
-            <img src="/static/image/total_customer_graph_img.png" alt="Avatar" style="float: right;  margin-top: 25px;"/>
+            <img
+              src="/static/image/total_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
             <div class="">
               <p class="card-text" id="text">Total Customer</p>
               <p class="card-text" id="textNumber">240</p>
@@ -233,7 +239,11 @@
           <!-- new customer card -->
           <div class="card col-lg-3">
             <img src="/static/image/new_cutomer_icon.png" alt="Avatar" />
-            <img src="/static/image/new_customer_graph.img.png" alt="Avatar" style="float: right;  margin-top: 25px;"/>
+            <img
+              src="/static/image/new_customer_graph.img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
             <div class="">
               <p class="card-text" id="text">New Customer</p>
               <p class="card-text" id="textNumber">240</p>
@@ -243,7 +253,11 @@
           <!-- Happy customer  -->
           <div class="card col-lg-3">
             <img src="/static/image/happy_customer_img.png" alt="Avatar" />
-            <img src="/static/image/happy_customer_graph_img.png" alt="Avatar" style="float: right;  margin-top: 25px;"/>
+            <img
+              src="/static/image/happy_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
             <div class="">
               <p class="card-text" id="text">Happy Customer</p>
               <p class="card-text" id="textNumber">240</p>
@@ -253,7 +267,11 @@
           <!-- Verified customer card -->
           <div class="card col-lg-3">
             <img src="/static/image/verifiyed_customer_img.png" alt="Avatar" />
-            <img src="/static/image/verifyied_customer_graph_img.png" alt="Avatar" style="float: right;  margin-top: 25px;"/>
+            <img
+              src="/static/image/verifyied_customer_graph_img.png"
+              alt="Avatar"
+              style="float: right; margin-top: 25px"
+            />
             <div class="">
               <p class="card-text" id="text">Verified Customer</p>
               <p class="card-text" id="textNumber">240</p>
@@ -263,9 +281,39 @@
       </div>
 
       <!-- list and graph card -->
-      <section>
+      <section class="list_graph" id="list_graph">
         <div>
-          
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>@twitter</td>
+              </tr>
+            </tbody>
+          </table>
+     
         </div>
       </section>
 

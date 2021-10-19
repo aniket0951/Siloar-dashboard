@@ -270,3 +270,9 @@ img {
 .container {
   padding: 2px 16px;
 }
+.list_graph{
+  margin-top: 600px;
+}
+#list_graph{
+  margin-top: 120px;
+}
