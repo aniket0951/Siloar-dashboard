@@ -76,7 +76,7 @@
           position: absolute;
           width: calc(100% - 78px);
           height: 100vh;
-          margin-left: 100px;
+          margin-left: 60px;
           padding: 20px;
         }
         .parentdiv .card {
@@ -101,10 +101,26 @@
         .card #text {
           margin-left: 45px;
         }
+        .card #text_long{
+          margin-left: 30px;
+        }
         .card #textNumber {
           margin-left: 60px;
         }
         .card:hover {
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+        .table_parent_div{
+          position: absolute;
+          width: calc(100% - 78px);
+        }
+        .table_parent_div .table_card{
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          width: 70%;
+          padding: 10px;
+          margin-left: 0px;
+        }
+        .table_card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
         .navbar-brand {
@@ -128,8 +144,9 @@
           height: 50px;
           width: 50px;
         }
-        .list_graph {
-          margin-top: 150px;
+        #list_graphs{
+          margin-top: 180px;
+          margin-left: 90px;
         }
       </style>
     </head>
@@ -259,7 +276,7 @@
               style="float: right; margin-top: 25px"
             />
             <div class="">
-              <p class="card-text" id="text">Happy Customer</p>
+              <p class="card-text" id="text_long">Happy Customer</p>
               <p class="card-text" id="textNumber">240</p>
             </div>
           </div>
@@ -273,7 +290,7 @@
               style="float: right; margin-top: 25px"
             />
             <div class="">
-              <p class="card-text" id="text">Verified Customer</p>
+              <p class="card-text" id="text_long">Verified Customer</p>
               <p class="card-text" id="textNumber">240</p>
             </div>
           </div>
@@ -281,40 +298,63 @@
       </div>
 
       <!-- list and graph card -->
-      <section class="list_graph" id="list_graph">
-        <div>
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-     
-        </div>
+      <section class="list_graph" id="list_graphs">
+          <div class="table_parent_div">
+            <div class="table_card col-lg-8">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Customer Id</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Attachment</th>
+                    <th scope="col">Document Staus</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Aniket Suryawanshi</td>
+                    <td>2nd Floor, Gandhi Complex, Hinjewadi, Phase -1, Pune 890231</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                    <td>Aniket</td>
+                  </tr>
+  
+                </tbody>
+              </table>
+         
+            </div>
+          </div>
       </section>
 
       <!-- scripts -->
