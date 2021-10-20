@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('voilaopen', voilaopen),
     path('remove', remove, name='remove'),
-    path('newtry',newtry, name="newtry"),
+    path('newtry', newtry, name="newtry"),
 ]

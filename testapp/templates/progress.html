@@ -36,7 +36,7 @@
           position: relative;
           width: calc(100% - 78px);
           background-color: #ac52f5;
-          margin-left: 80px;
+          margin-left: 90px;
           top: 0;
         }
         .sidebar.active ~ .navigation_bar {
@@ -76,7 +76,7 @@
           position: absolute;
           width: calc(100% - 78px);
           height: 100vh;
-          margin-left: 60px;
+          margin-left: 80px;
           padding: 20px;
         }
         .parentdiv .card {
@@ -101,8 +101,11 @@
         .card #text {
           margin-left: 45px;
         }
-        .card #text_long{
-          margin-left: 30px;
+        .card #text_res {
+          margin-left: 35px;
+        }
+        .card #text_long {
+          margin-left: 35px;
         }
         .card #textNumber {
           margin-left: 60px;
@@ -110,16 +113,24 @@
         .card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
-        .table_parent_div{
+        .table_parent_div {
           position: absolute;
           width: calc(100% - 78px);
         }
-        .table_parent_div .table_card{
+        .table_parent_div .table_card {
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           width: 70%;
-          padding: 10px;
-          margin-left: 0px;
+          padding: 10px 0;
+          margin-right: 20px;
+          box-sizing: border-box;
+          display: flex;
+          flex-wrap: nowrap;
+          box-sizing: border-box;
+          border: 1px solid #fff;
+          overflow-y: scroll;
+          height: 500px;
         }
+
         .table_card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
@@ -144,13 +155,27 @@
           height: 50px;
           width: 50px;
         }
-        #list_graphs{
+        #list_graphs {
+          position: absolute;
+          width: calc(100% - 78px);
           margin-top: 180px;
-          margin-left: 90px;
+          margin-left: 140px;
+          margin-bottom: 25px;
+        }
+        .sidebar.active ~ #list_graphs {
+          width: calc(100% - 240px);
+          left: 160px;
+        }
+        .table {
+          counter-reset: serial-number;
+        }
+        .table td:first-child:before {
+          counter-increment: serial-number; /* Increment the serial number counter */
+          content: counter(serial-number); /* Display the counter */
         }
       </style>
     </head>
-    <body>
+    <body style="overflow: scroll">
       <!-- side bar -->
       <div class="sidebar" id="main">
         <div class="logo_content">
@@ -249,11 +274,11 @@
             />
             <div class="">
               <p class="card-text" id="text">Total Customer</p>
-              <p class="card-text" id="textNumber">240</p>
+              <p class="card-text" id="textNumber">{{total_request}}</p>
             </div>
           </div>
 
-          <!-- new customer card -->
+          <!-- Restaurant req -->
           <div class="card col-lg-3">
             <img src="/static/image/new_cutomer_icon.png" alt="Avatar" />
             <img
@@ -262,12 +287,12 @@
               style="float: right; margin-top: 25px"
             />
             <div class="">
-              <p class="card-text" id="text">New Customer</p>
-              <p class="card-text" id="textNumber">240</p>
+              <p class="card-text" id="text_res">Restaurant Request</p>
+              <p class="card-text" id="textNumber">{{restaurant_req_count}}</p>
             </div>
           </div>
 
-          <!-- Happy customer  -->
+          <!-- Driver request  -->
           <div class="card col-lg-3">
             <img src="/static/image/happy_customer_img.png" alt="Avatar" />
             <img
@@ -276,8 +301,8 @@
               style="float: right; margin-top: 25px"
             />
             <div class="">
-              <p class="card-text" id="text_long">Happy Customer</p>
-              <p class="card-text" id="textNumber">240</p>
+              <p class="card-text" id="text_long">Driver Request</p>
+              <p class="card-text" id="textNumber">{{driver_req}}</p>
             </div>
           </div>
 
@@ -299,62 +324,49 @@
 
       <!-- list and graph card -->
       <section class="list_graph" id="list_graphs">
-          <div class="table_parent_div">
-            <div class="table_card col-lg-8">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Customer Id</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Mobile Number</th>
-                    <th scope="col">Attachment</th>
-                    <th scope="col">Document Staus</th>
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>Aniket Suryawanshi</td>
-                    <td>2nd Floor, Gandhi Complex, Hinjewadi, Phase -1, Pune 890231</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                    <td>Aniket</td>
-                  </tr>
-  
-                </tbody>
-              </table>
-         
-            </div>
+        <div class="table_parent_div" style="padding-bottom: 3%">
+          <div class="table_card ">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Sr.No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Mobile Number</th>
+                  <th scope="col">Document Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- for  restuarnt request -->
+                {% for item in restaurant_req %}
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>{{item.owner_name}}</td>
+                  <td style="color: green">New</td>
+                  <td>{{item.owner_current_address}}</td>
+                  <td>{{item.owner_contact_no}}</td>
+                  <td style="color: red">Not Verified</td>
+                </tr>
+                {% endfor %}
+
+                <!-- for driver request -->
+                {% for i in data %}
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>{{i.full_name}}</td>
+                  <td style="color: green">New</td>
+                  <td>
+                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                  </td>
+                  <td>{{i.contact_number}}</td>
+                  <td style="color: red">Not Verified</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
+        </div>
       </section>
 
       <!-- scripts -->
