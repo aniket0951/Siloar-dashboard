@@ -38,7 +38,14 @@
           width: calc(100% - 78px);
           background-color: #ac52f5;
           margin-left: 90px;
-          top: 0;
+        }
+        .sidebar {
+          position: absolute;
+          height: 100%;
+          width: 78px;
+          background: #11101d;
+          padding: 6px 14px ;
+          transition: all 0.2s ease;
         }
         .sidebar.active ~ .navigation_bar {
           width: calc(100% - 240px);
@@ -90,27 +97,16 @@
         .sidebar.active ~ .parentdiv {
           width: calc(100% - 240px);
           left: 140px;
+          font-size: 12.1px;
         }
         .card img {
           float: left;
           top: 40%;
         }
-        .card .container #text {
-          margin-right: 55px;
-          margin-top: 10px;
-        }
-        .card #text {
+        .card-text {
           margin-left: 35px;
         }
-        .card #text_res {
-          margin-left: 25px;
-        }
-        .card #text_long {
-          margin-left: 35px;
-        }
-        .card #textNumber {
-          margin-left: 60px;
-        }
+
         .card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
@@ -176,7 +172,7 @@
         }
       </style>
     </head>
-    <body>
+    <body style="overflow-y: scroll">
       <!-- side bar -->
       <div class="sidebar" id="main">
         <div class="logo_content">
@@ -267,7 +263,11 @@
         <!-- card view -->
         <div class="row">
           <div class="card col-lg-3 col-md-3">
-            <img src="/static/image/total_customer.png" alt="Avatar" />
+            <img
+              src="/static/image/total_customer.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
             <img
               src="/static/image/total_customer_graph_img.png"
               alt="Avatar"
@@ -280,8 +280,12 @@
           </div>
 
           <!-- Restaurant req -->
-          <div class="card col-lg-3">
-            <img src="/static/image/new_cutomer_icon.png" alt="Avatar" />
+          <div class="card col-lg-3 col-md-3">
+            <img
+              src="/static/image/new_cutomer_icon.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
             <img
               src="/static/image/new_customer_graph.img.png"
               alt="Avatar"
@@ -294,8 +298,12 @@
           </div>
 
           <!-- Driver request  -->
-          <div class="card col-lg-3">
-            <img src="/static/image/happy_customer_img.png" alt="Avatar" />
+          <div class="card col-lg-3 col-md-3">
+            <img
+              src="/static/image/happy_customer_img.png"
+              style="width: 25px; height: 25px"
+              alt="Avatar"
+            />
             <img
               src="/static/image/happy_customer_graph_img.png"
               alt="Avatar"
@@ -308,7 +316,7 @@
           </div>
 
           <!-- Verified customer card -->
-          <div class="card col-lg-3">
+          <div class="card col-lg-3 col-md-3">
             <img src="/static/image/verifiyed_customer_img.png" alt="Avatar" />
             <img
               src="/static/image/verifyied_customer_graph_img.png"
@@ -324,9 +332,9 @@
       </div>
 
       <!-- list and graph card -->
-      <section class="list_graph" >
+      <section class="list_graph">
         <div class="table_parent_div" style="padding-bottom: 3%">
-          <div class="table_card ">
+          <div class="table_card">
             <table class="table table-striped">
               <thead class="thead-dark">
                 <tr>
@@ -369,8 +377,6 @@
           </div>
         </div>
       </section>
-
-
 
       <!-- scripts -->
       <script>
