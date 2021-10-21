@@ -31,6 +31,10 @@
         crossorigin="anonymous"
       ></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+      <script
+        type="text/javascript"
+        src="https://www.gstatic.com/charts/loader.js"
+      ></script>
 
       <style>
         .navigation_bar {
@@ -44,7 +48,7 @@
           height: 100%;
           width: 78px;
           background: #11101d;
-          padding: 6px 14px ;
+          padding: 6px 14px;
           transition: all 0.2s ease;
         }
         .sidebar.active ~ .navigation_bar {
@@ -96,7 +100,6 @@
           height: 80%;
           padding: 20px;
           margin-left: 20px;
-          
         }
         .sidebar.active ~ .parentdiv {
           /* width: calc(100% - 240px); */
@@ -105,7 +108,9 @@
           margin-right: 250px;
           width: 90%;
           height: 100vh;
-
+        }
+        .sidebar.active ~ .parentdiv .text_res {
+          padding: 3px;
         }
         .card img {
           float: left;
@@ -177,6 +182,42 @@
         .table td:first-child:before {
           counter-increment: serial-number; /* Increment the serial number counter */
           content: counter(serial-number); /* Display the counter */
+        }
+        .circle {
+          position: relative;
+          top: 5px;
+          left: 5px;
+          width: 100px;
+          height: 100px;
+          padding: auto;
+          border-radius: 100%;
+          background-color: #f8f9fa;
+        }
+        .circle-border {
+          position: relative;
+          text-align: center;
+          width: 110px;
+          height: 110px;
+          top: 150px;
+          float: right;
+          right: 250px;
+          margin-left: 30%;
+          border-radius: 100%;
+          background-color: #693195;
+          background-image: linear-gradient(
+              162deg,
+              transparent 50%,
+              #f0f0f0 50%
+            ),
+            linear-gradient(90deg, #f0f0f0 50%, transparent 50%);
+        }
+        .span_circle .span_a {
+          background: #222;
+          color: #fff;
+          display: inline-block;
+          border-radius: 100%;
+          padding: 5.5px 5.5px;
+          float: right;
         }
       </style>
     </head>
@@ -300,7 +341,7 @@
               style="float: right; margin-top: 25px"
             />
             <div class="">
-              <p class="card-text" id="text">Restaurant Request</p>
+              <p class="card-text text_res" id="text">Restaurant Request</p>
               <p class="card-text" id="textNumber">{{restaurant_req_count}}</p>
             </div>
           </div>
@@ -385,6 +426,12 @@
           </div>
         </div>
       </section>
+
+      <div class="circle-border">
+        <div class="circle">
+          <span class="span_circle"><a class="span_a">12</a> </span>
+        </div>
+      </div>
 
       <!-- scripts -->
       <script>
