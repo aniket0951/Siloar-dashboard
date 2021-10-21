@@ -189,33 +189,38 @@
           left: 26px;
           width: 100px;
           height: 100px;
+          padding: 10px;
           border-radius: 100%;
-          background-color: #f8f9fa;
+          background-color: #F1F1F1;
         }
         .circle-border {
           position: relative;
           width: 150px;
           height: 150px;
-          top: 150px;
-          float: right;
-          right: 250px;
           border-radius: 100%;
-          background-color: #693195;
-          background-image: linear-gradient(
-              162deg,
-              transparent 50%,
-              #f0f0f0 50%
-            ),
-            linear-gradient(90deg, #f0f0f0 50%, transparent 50%);
+          background: linear-gradient(135deg, #F1AE28 40%, #693195 0%);
         }
         .span_circle .span_a {
           background: #fff;
           color: #000;
           display: inline-block;
           border-radius: 100%;
-          padding: 5.5px 5.5px;
-          left: 26px;
+          padding: 5px 5.5px;
           float: right;
+          margin: 50px -35px 0px 0px;
+        }
+        .span_circle .span_b{
+          background: #fff;
+          color: #000;
+          display: inline-block;
+          border-radius: 100%;
+          padding: 5px 5.5px;
+          float: left;
+        }
+        .graph_card{
+          top: 250px;
+          float: right;
+          right: 150px;
         }
       </style>
     </head>
@@ -425,11 +430,21 @@
         </div>
       </section>
 
-      <div class="circle-border">
-        <div class="circle">
-          <span class="span_circle"><a class="span_a">12</a> </span>
-        </div>
+      <!--  graph view    -->
+      <div class="parentdiv">
+        <div class="row">
+          <div class="card col-lg-3 col-md-3 graph_card">
+            <div class="circle-border">
+              <div class="circle">
+                <span class="span_circle"><a class="span_a">12%</a> </span>
+                <!-- <span class="span_circle"><a class="span_b">42%</a> </span> -->
+              </div>
+            
+            </div>
+          </div>
       </div>
+      </div>
+
 
       <!-- scripts -->
       <script>
