@@ -124,17 +124,18 @@
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
         .table_parent_div {
-          position: absolute;
-          width: calc(100% - 78px);
+          position: relative;
+          /* width: calc(100% - 78px); */
+          /* width: 100%; */
         }
         .table_parent_div .table_card {
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-          width: 70%;
+          /* width: 70%; */
           padding: 10px 0;
-          margin-right: 20px;
+          /* margin-right: 20px; */
           box-sizing: border-box;
-          display: flex;
-          flex-wrap: nowrap;
+          /* display: flex;
+          flex-wrap: nowrap; */
           box-sizing: border-box;
           border: 1px solid #fff;
           overflow-y: scroll;
@@ -167,7 +168,8 @@
         }
         .list_graph {
           position: absolute;
-          width: calc(100% - 78px);
+          /* width: calc(100% - 78px); */
+          width: 100%;
           margin-top: 180px;
           margin-left: 100px;
           margin-bottom: 25px;
@@ -200,6 +202,9 @@
           border-radius: 100%;
           background: linear-gradient(135deg, #F1AE28 40%, #693195 0%);
         }
+        .sidebar.active ~ .list_graph .row .graph_cards .circle-border{
+          background: linear-gradient(135deg, #F1AE28 40%, #24D52A 0%);
+        }
         .span_circle .span_a {
           background: #fff;
           color: #000;
@@ -218,29 +223,26 @@
           float: left;
           margin: -15px 0px 10px -30px;
         }
-        /* .parentgraphdiv{
-          position: absolute;
-          width: calc(100% - 78px);
-          margin-left: 45px;
-        } */
         .graph_card{
-          width: 28%;
-          top: 250px;
+          position: relative;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
           height: 85%;
           padding: 10px;
-          margin-right: 20px;
-          float: right;
           background-color: #fff;
         }
-        .sidebar.active ~ .parentgraphdiv .graph_card{
-          width: 35%;
-          left: 50px;
+        .sidebar.active ~ .list_graph .graph_card{
+          width: 31%;
+          color: white;
+          background-color: #6F349D;
         }
-        .sidebar.active ~ .parentgraphdiv{
-          width: calc(100% - 240px);      
-          float: right;
-          /* padding-right: 25px; */
+        .pie_text{
+          display: list-item;
+          float: right; 
+          margin: 15px -175px 0px 0px; 
+          color: #6F349D;
+        }
+        .sidebar.active ~ .list_graph .graph_card .pie_text{
+          color: white;
         }
         .graph_card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -409,76 +411,75 @@
 
       <!-- list and graph card -->
       <section class="list_graph">
-        <div class="table_parent_div" style="padding-bottom: 3%">
-          <div class="table_card">
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Sr.No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Mobile Number</th>
-                  <th scope="col">Document Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- for  restuarnt request -->
-                {% for item in restaurant_req %}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>{{item.owner_name}}</td>
-                  <td style="color: green">New</td>
-                  <td>{{item.owner_current_address}}</td>
-                  <td>{{item.owner_contact_no}}</td>
-                  <td style="color: red">Not Verified</td>
-                </tr>
-                {% endfor %}
-
-                <!-- for driver request -->
-                {% for i in data %}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>{{i.full_name}}</td>
-                  <td style="color: green">New</td>
-                  <td>
-                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                  </td>
-                  <td>{{i.contact_number}}</td>
-                  <td style="color: red">Not Verified</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+        <div class="row ">
+          <div class="table_parent_div col-lg-8 col-md-8" style="padding-bottom: 3%">
+            <div class="table_card">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Document Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- for  restuarnt request -->
+                  {% for item in restaurant_req %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>{{item.owner_name}}</td>
+                    <td style="color: green">New</td>
+                    <td>{{item.owner_current_address}}</td>
+                    <td>{{item.owner_contact_no}}</td>
+                    <td style="color: red">Not Verified</td>
+                  </tr>
+                  {% endfor %}
+  
+                  <!-- for driver request -->
+                  {% for i in data %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>{{i.full_name}}</td>
+                    <td style="color: green">New</td>
+                    <td>
+                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                    </td>
+                    <td>{{i.contact_number}}</td>
+                    <td style="color: red">Not Verified</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
+          <!--  graph view    -->
+          <div class="col-lg-3 col-md-3 graph_card">
+            <h3  style="margin-left: 15px; margin-top: -5px;">Customer Overview</h3>
+            <div class="circle-border">
+      
+              <h4 class="pie_text" >
+                Verified Customers<br>
+                1520
+              </h3>
+              <h4 class="pie_text2" style="display: list-item; float: right;  margin: 75px -200px 0px 0px; color: #F1AE28;">
+                UnVerified Customers <br>
+                82
+              </h3>
+              <div class="circle">
+                <span class="span_circle"><a class="span_a">12%</a> </span>
+                <span class="span_circle"><a class="span_b">42%</a> </span>
+              </div>
+              
+            </div>
+            
+          </div>
+          
         </div>
+        
       </section>
-
-                  <!--  graph view    -->
-                  <div class="parentgraphdiv">
-                    <div class="row">
-                      <div class="col-lg-3 col-md-3 graph_card">
-                        <h3 style="margin-left: 15px; margin-top: -5px;">Customer Overview</h3>
-                        <div class="circle-border">
-                  
-                          <h4  style="display: list-item; float: right; margin: 15px -222px 0px 0px; color: #6F349D;">
-                            Verified Customers<br>
-                            1520
-                          </h3>
-                          <h4  style="display: list-item; float: right; margin: 75px -245px 0px 0px; color: #F1AE28;">
-                            UnVerified Customers <br>
-                            82
-                          </h3>
-                          <div class="circle">
-                            <span class="span_circle"><a class="span_a">12%</a> </span>
-                            <span class="span_circle"><a class="span_b">42%</a> </span>
-                          </div>
-                          
-                        </div>
-                        
-                      </div>
-                  </div>
-                  </div>
 
       <!-- scripts -->
       <script>
