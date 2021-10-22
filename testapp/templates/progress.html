@@ -207,7 +207,7 @@
           border-radius: 100%;
           padding: 5px 5.5px;
           float: right;
-          margin: 50px -35px 0px 0px;
+          margin: 65px -30px 0px 0px;
         }
         .span_circle .span_b{
           background: #fff;
@@ -216,12 +216,32 @@
           border-radius: 100%;
           padding: 5px 5.5px;
           float: left;
+          margin: -15px 0px 10px -30px;
         }
         .graph_card{
+          width: 29%;
           top: 250px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          height: 80%;
+          padding: 10px;
+          margin-right: 20px;
           float: right;
-          right: 150px;
+          background-color: #fff;
         }
+        .graph_card:hover {
+          box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+        /* .parentgraphdiv{
+          position: absolute;
+          width: 40%;
+          height: 100vh;
+          float: right;
+          right: -50px;
+          margin-left: 80px;
+          padding: 20px;
+          flex-wrap: wrap;
+          
+        } */
       </style>
     </head>
     <body style="overflow-y: scroll">
@@ -430,21 +450,27 @@
         </div>
       </section>
 
-      <!--  graph view    -->
-      <div class="parentdiv">
-        <div class="row">
-          <div class="card col-lg-3 col-md-3 graph_card">
-            <div class="circle-border">
-              <div class="circle">
-                <span class="span_circle"><a class="span_a">12%</a> </span>
-                <!-- <span class="span_circle"><a class="span_b">42%</a> </span> -->
-              </div>
-            
-            </div>
-          </div>
-      </div>
-      </div>
-
+                  <!--  graph view    -->
+                  <div class="parentgraphdiv">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-3 graph_card">
+                        <div class="circle-border">
+                          <h4  style="display: list-item; float: right; margin: 15px -222px 0px 0px; color: #6F349D;">
+                            Verified Customers
+                          </h3>
+                          <h4  style="display: list-item; float: right; margin: 55px -245px 0px 0px; color: #F1AE28;">
+                            UnVerified Customers
+                          </h3>
+                          <div class="circle">
+                            <span class="span_circle"><a class="span_a">12%</a> </span>
+                            <span class="span_circle"><a class="span_b">42%</a> </span>
+                          </div>
+                          
+                        </div>
+                        
+                      </div>
+                  </div>
+                  </div>
 
       <!-- scripts -->
       <script>
