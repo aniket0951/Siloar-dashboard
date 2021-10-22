@@ -41,7 +41,7 @@
           position: relative;
           width: calc(100% - 78px);
           background-color: #ac52f5;
-          margin-left: 90px;
+          margin-left: 78.5px;
         }
         .sidebar {
           position: absolute;
@@ -53,7 +53,7 @@
         }
         .sidebar.active ~ .navigation_bar {
           width: calc(100% - 240px);
-          left: 160px;
+          left: 161px;
         }
         .loader {
           border: 16px solid #f3f3f3;
@@ -218,30 +218,34 @@
           float: left;
           margin: -15px 0px 10px -30px;
         }
+        /* .parentgraphdiv{
+          position: absolute;
+          width: calc(100% - 78px);
+          margin-left: 45px;
+        } */
         .graph_card{
-          width: 29%;
+          width: 28%;
           top: 250px;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-          height: 80%;
+          height: 85%;
           padding: 10px;
           margin-right: 20px;
           float: right;
           background-color: #fff;
         }
+        .sidebar.active ~ .parentgraphdiv .graph_card{
+          width: 35%;
+          left: 50px;
+        }
+        .sidebar.active ~ .parentgraphdiv{
+          width: calc(100% - 240px);      
+          float: right;
+          /* padding-right: 25px; */
+        }
         .graph_card:hover {
           box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
-        /* .parentgraphdiv{
-          position: absolute;
-          width: 40%;
-          height: 100vh;
-          float: right;
-          right: -50px;
-          margin-left: 80px;
-          padding: 20px;
-          flex-wrap: wrap;
-          
-        } */
+       
       </style>
     </head>
     <body style="overflow-y: scroll">
@@ -454,12 +458,16 @@
                   <div class="parentgraphdiv">
                     <div class="row">
                       <div class="col-lg-3 col-md-3 graph_card">
+                        <h3 style="margin-left: 15px; margin-top: -5px;">Customer Overview</h3>
                         <div class="circle-border">
+                  
                           <h4  style="display: list-item; float: right; margin: 15px -222px 0px 0px; color: #6F349D;">
-                            Verified Customers
+                            Verified Customers<br>
+                            1520
                           </h3>
-                          <h4  style="display: list-item; float: right; margin: 55px -245px 0px 0px; color: #F1AE28;">
-                            UnVerified Customers
+                          <h4  style="display: list-item; float: right; margin: 75px -245px 0px 0px; color: #F1AE28;">
+                            UnVerified Customers <br>
+                            82
                           </h3>
                           <div class="circle">
                             <span class="span_circle"><a class="span_a">12%</a> </span>
