@@ -19,7 +19,7 @@ from testapp.views import voilaopen, remove, newtry
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('voilaopen', voilaopen),
+    path('voilaopen', voilaopen,name='index'),
     path('remove', remove, name='remove'),
     path('newtry', newtry, name="newtry"),
 ]

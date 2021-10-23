@@ -2,15 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="shortcut icon" href="/static/image/voila_logo.png">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <link rel="stylesheet" href="/static/css/loginScreen.css" />
     <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/js/jquery.js" />
-    <link rel="stylesheet" href="/static/js/bootstrap.min.js" />
-    <link rel="stylesheet" href="/static/js/popper.js" />
+    <script src="/static/js/jquery.js" ></script>
+    <script src="/static/js/popper.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link
     href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
     rel="stylesheet"
@@ -49,12 +51,41 @@
                   <label for="exampleInputPassword1">Password</label>
                   <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                 </div>
-                <button  class="btn" data-target="#exampleModalCenter">Login</button>
+                <div>
+                  {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == "error"%}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</li>
+                    {% else %}
+                    <script>
+                      swal({
+                      icon: '/static/image/login_success.png',
+                      text: 'Silor Login successfully',  
+                      buttons: {
+                      cancel: "Cancel",
+                      catch: {
+                        text: "Next",
+                        value: "catch",
+                      }
+                    },
+                  })
+                  .then((value) => {
+                    switch (value) {
+                      case "catch":
+                        window.location = "newtry";
+                        break;
+                    }
+                  });
+             </script>        
+                     {% endif %}
+                  {% endfor %}
+                 {% endif %}
+                </div>
+                <button  class="btn form_button"  data-toggle="modal" data-target="#myModal">Login</button>   
               </form>
           </div>
         </div>
       </div>
     </section>
-
   </body>
 </html>
