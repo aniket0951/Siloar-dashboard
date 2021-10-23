@@ -23,32 +23,8 @@ def voilaopen(request):
 def remove(request):
     reqParam = request.GET.get('username', 'default')
     password = request.GET.get('password', 'default')
-    print(reqParam, password)
+    print("names" + reqParam)
     return render(request, 'firstHT.html')
-    mobile_number = reqParam
-    otp = random.randint(1111, 9999)
-    if mobile_number is not None:
-        conn = http.client.HTTPConnection("2factor.in")
-        APIKEY = "06fe377d-7a20-11ea-9fa5-0200cd936042"
-        payload = ""
-        headers = {'content-type': "application/x-www-form-urlencoded"}
-        conn.request("GET", f"/API/V1/{APIKEY}/SMS/{mobile_number}/{otp}", payload,
-                     headers)
-        res = conn.getresponse().read()
-        logRes = json.loads(res)
-        if logRes is not None:
-            sendOtpStatus = logRes["Status"]
-            if sendOtpStatus == "Error":
-                return HttpResponse("Failed to send otp please try again")
-            else:
-                return HttpResponse("Otp send successfully")
-        else:
-            return HttpResponse("Please try again")
-    else:
-        return HttpResponse("Please enter the mobile number its required to login")
-
-    return HttpResponse(reqParam)
-
 
 def newtry(request):
     new_request = driver_registartion_request.objects.all()
