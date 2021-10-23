@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-
+from django.core.paginator import Paginator
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
     restaurant_registration_request
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
@@ -22,7 +22,6 @@ def remove(request):
 
     if reqParam != 'aniket@gmail.com':
         messages.error(request, 'You are not authorised User Please try again')
-        # print("Wrong email")
         return redirect('index')
     else:
         messages.success(request, "Success")
@@ -44,3 +43,28 @@ def newtry(request):
     return render(request, 'progress.html',
                   {'driver_req': str(countRe), "restaurant_req_count": str(restaurant_count), 'data': serializers.data,
                    'total_request': str(total_cust), 'restaurant_req': restaurant_serializers.data})
+
+
+def driverReq(request):
+    new_request = driver_registartion_request.objects.all()
+    serializers = DriverRegistrationRequestSerializer(new_request, many=True)
+    countRe = driver_registartion_request.objects.all().count()
+    # return render(request, 'DriverReq.html', {'data': serializers.data})
+
+    p = Paginator(serializers.data, 5)                
+    page_num = request.GET.get('page')
+
+    try:
+        page_obj = p.get_page(page_num)
+    except PageNotAnInteger:
+        page_obj = p.page(1)
+    except EmptyPage:
+        page_obj = p.page(p.num_pages)
+
+    context = {'serializers.data': page_obj, 'data':serializers.data}
+
+
+
+
+    return render(request,'DriverReq.html', context)
+   

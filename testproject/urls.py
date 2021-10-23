@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from testapp.views import voilaopen, remove, newtry
+from testapp.views import voilaopen, remove, newtry, driverReq
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('voilaopen', voilaopen,name='index'),
     path('remove', remove, name='remove'),
     path('newtry', newtry, name="newtry"),
+
+    # to show driver request
+    path('driverReq', driverReq, name='driverReq')
 ]
