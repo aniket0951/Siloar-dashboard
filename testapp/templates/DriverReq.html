@@ -1,170 +1,316 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Driver Request</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="{% static 'css/DriverReq.css' %}" />
-
     <link
-    href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous"
-  />
-</head>
-<body >
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
     <div class="sidebar" id="main">
-        <div class="logo_content">
-          <div class="logo">
-            <i class="bx bxl-android"></i>
-            <div class="logo_name">Voila Sailor</div>
-          </div>
-          <i class="bx bx-menu" id="btn"></i>
+      <div class="logo_content">
+        <div class="logo">
+          <i class="bx bxl-android"></i>
+          <div class="logo_name">Voila Sailor</div>
         </div>
+        <i class="bx bx-menu" id="btn"></i>
+      </div>
 
-        <ul class="nav_list">
-          <li>
-            <a href="#">
-              <i class="bx bx-search"></i>
-              <input type="text" placeholder="Search....." />
-            </a>
-            <span class="tooltip">Search</span>
-          </li>
+      <ul class="nav_list">
+        <li>
+          <a href="#">
+            <i class="bx bx-search"></i>
+            <input type="text" placeholder="Search....." />
+          </a>
+          <span class="tooltip">Search</span>
+        </li>
 
-          <li>
-            <a href="driverReq">
-              <i class="bx bxs-car"></i>
-              <span class="links_name">Driver Request</span>
-            </a>
-            <span class="tooltip">Driver Request</span>
-          </li>
+        <li>
+          <a href="driverReq">
+            <i class="bx bxs-car"></i>
+            <span class="links_name">Driver Request</span>
+          </a>
+          <span class="tooltip">Driver Request</span>
+        </li>
 
-          <li>
-            <a href="#">
-              <i class="bx bx-restaurant"></i>
-              <span class="links_name">Restaurant Request</span>
-            </a>
-            <span class="tooltip">Res Request</span>
-          </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-restaurant"></i>
+            <span class="links_name">Restaurant Request</span>
+          </a>
+          <span class="tooltip">Res Request</span>
+        </li>
 
-          <li>
-            <a href="#">
-              <i class="bx bxs-bell"></i>
-              <span class="links_name">Notification</span>
-            </a>
-            <span class="tooltip">Notification</span>
-          </li>
+        <li>
+          <a href="#">
+            <i class="bx bxs-bell"></i>
+            <span class="links_name">Notification</span>
+          </a>
+          <span class="tooltip">Notification</span>
+        </li>
 
-          <li>
-            <a href="#">
-              <i class="bx bx-cog"></i>
-              <span class="links_name">Settings</span>
-            </a>
-            <span class="tooltip">Settings</span>
-          </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-cog"></i>
+            <span class="links_name">Settings</span>
+          </a>
+          <span class="tooltip">Settings</span>
+        </li>
 
-          <li>
-            <a href="#">
-              <i class="bx bxs-help-circle"></i>
-              <span class="links_name">Help</span>
-            </a>
-            <span class="tooltip">Help</span>
-          </li>
-        </ul>
+        <li>
+          <a href="#">
+            <i class="bx bxs-help-circle"></i>
+            <span class="links_name">Help</span>
+          </a>
+          <span class="tooltip">Help</span>
+        </li>
+      </ul>
 
-        <div class="profile_content">
-          <div class="profile">
-            <div class="profile_details">
-              <img src="" alt="" />
-              <div class="name_job">
-                <div class="name">Aniket Suryawanshi</div>
-                <div class="job">Android Developer</div>
-              </div>
+      <div class="profile_content">
+        <div class="profile">
+          <div class="profile_details">
+            <img src="" alt="" />
+            <div class="name_job">
+              <div class="name">Aniket Suryawanshi</div>
+              <div class="job">Android Developer</div>
             </div>
-            <i class="bx bx-log-out" id="log_out"></i>
           </div>
+          <i class="bx bx-log-out" id="log_out"></i>
         </div>
+      </div>
     </div>
 
-     <!-- navigation bar -->
-     <div class="navigation_bar">
-        <nav class="navbar">
-          <div class="container-fluid" id="navigation_div">
-            <a class="navbar-brand">Driver Request</a>
-            <i class="bx bx-menu"></i>
-            <a class="nanbar-user">Aniket Suryawanshi</a>
-          </div>
-        </nav>
-     </div>
-      <!-- list and graph card -->
-      <section class="parenttab">
-        <div class="row ">s
-          <div class="table_parent_div col-lg-11 col-md-11" style="padding-bottom: 3%">
-            <!-- table view -->
-            <div class="table_card">
-              <table class="table table-striped">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Date of Birth</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Mobile Number</th>
-                    <th scope="col">Document Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- for driver request -->
-                  {% for i in data %}
-                  <tr>
-                    <td>&nbsp;</td>
-                    <td>{{i.full_name}}</td>
-                    <td style="color: green">New</td>
-                    <td>{{i.date_of_birth }}</td>
-                    <td>{{i.email}}</td>
-                    <td>
-                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                    </td>
-                    <td>{{i.contact_number}}</td>
-                    <td style="color: red">Not Verified</td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
+    <!-- navigation bar -->
+    <div class="navigation_bar">
+      <nav class="navbar">
+        <div class="container-fluid" id="navigation_div">
+          <a class="navbar-brand">Driver Request</a>
+          <i class="bx bx-menu"></i>
+          <a class="nanbar-user">Aniket Suryawanshi</a>
+        </div>
+      </nav>
+    </div>
+
+
+    <!-- list and graph card -->
+    <section class="parenttab">
+      <div class="">
+      <ul class="nav nav-pills option_tab"  role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="pill" href="#new">New</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="#progress">Inprogress</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="#verified">Verified</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="pill" href="#rejected">Rejected</a>
+        </li>
+      </ul>
+
+      <div class="row tab-content">
+        <!-- new request -->
+        <div
+          class="table_parent_div col-lg-11 col-md-11  tab-pane active"
+          style="padding-bottom: 3%"
+          id="new"
+        >
+          <div class="table_card" id="menu3">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Sr.No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date of Birth</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Mobile Number</th>
+                  <th scope="col">Document Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- for driver request -->
+                {% for i in data %}
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>{{i.full_name}}</td>
+                  <td style="color: green">New</td>
+                  <td>{{i.date_of_birth }}</td>
+                  <td>{{i.email}}</td>
+                  <td>
+                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                  </td>
+                  <td>{{i.contact_number}}</td>
+                  <td style="color: red">Not Verified</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
 
+        <!-- Inprogress -->
+        <div
+          class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
+          style="padding-bottom: 3%"
+          id="progress"
+        >
+          <div class="table_card" id="menu3">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Sr.No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date of Birth</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Mobile Number</th>
+                  <th scope="col">Document Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- for driver request -->
+                {% for i in data %}
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>{{i.full_name}}</td>
+                  <td style="color: #F1AE28">Inprogress</td>
+                  <td>{{i.date_of_birth }}</td>
+                  <td>{{i.email}}</td>
+                  <td>
+                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                  </td>
+                  <td>{{i.contact_number}}</td>
+                  <td style="color: #F1AE28">Reviewing</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-      </section>
+        <!-- Verified -->
+        <div
+          class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
+          style="padding-bottom: 3%"
+          id="verified"
+        >
+          <div class="table_card" id="menu3">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Sr.No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Date of Birth</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Mobile Number</th>
+                  <th scope="col">Document Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- for driver request -->
+                {% for i in data %}
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>{{i.full_name}}</td>
+                  <td style="color: #9647D6">Close</td>
+                  <td>{{i.date_of_birth }}</td>
+                  <td>{{i.email}}</td>
+                  <td>
+                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                  </td>
+                  <td>{{i.contact_number}}</td>
+                  <td style="color: #24D52A">Verified</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Rejected -->
+        <div
+        class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
+        style="padding-bottom: 3%"
+        id="rejected"
+      >
+        <div class="table_card" id="menu3">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Sr.No</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date of Birth</th>
+                <th scope="col">Email</th>
+                <th scope="col">Address</th>
+                <th scope="col">Mobile Number</th>
+                <th scope="col">Document Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- for driver request -->
+              {% for i in data %}
+              <tr>
+                <td>&nbsp;</td>
+                <td>{{i.full_name}}</td>
+                <td style="color: red">Rejected</td>
+                <td>{{i.date_of_birth }}</td>
+                <td>{{i.email}}</td>
+                <td>
+                  {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                </td>
+                <td>{{i.contact_number}}</td>
+                <td style="color: red">Non-Verified</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        </div>
+
+      </div>
 
 
+    </div>
+    </section>
 
-
-      
     <!-- scripts -->
     <script>
-        let btn = document.querySelector("#btn");
-        let sidebar = document.querySelector(".sidebar");
-        let searchBtn = document.querySelector(".bx-search");
+      let btn = document.querySelector("#btn");
+      let sidebar = document.querySelector(".sidebar");
+      let searchBtn = document.querySelector(".bx-search");
 
-        btn.onclick = function () {
-          sidebar.classList.toggle("active");
-        };
-        searchBtn.onclick = function () {
-          sidebar.classList.toggle("active");
-        };
-      </script>
+      btn.onclick = function () {
+        sidebar.classList.toggle("active");
+      };
+      searchBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+      };
+    </script>
 
-</body>
+    </body>
 </html>

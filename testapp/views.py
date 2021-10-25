@@ -46,6 +46,7 @@ def newtry(request):
 
 
 def driverReq(request):
+    # return render(request, 'otp_verify.html')
     new_request = driver_registartion_request.objects.all()
     serializers = DriverRegistrationRequestSerializer(new_request, many=True)
     countRe = driver_registartion_request.objects.all().count()
