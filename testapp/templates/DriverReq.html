@@ -21,7 +21,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
   </head>
   <body>
     <div class="sidebar" id="main">
@@ -108,194 +107,194 @@
       </nav>
     </div>
 
-
     <!-- list and graph card -->
     <section class="parenttab">
       <div class="">
-      <ul class="nav nav-pills option_tab"  role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" data-toggle="pill" href="#new">New</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#progress">Inprogress</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#verified">Verified</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="pill" href="#rejected">Rejected</a>
-        </li>
-      </ul>
+        <ul class="nav nav-pills option_tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill"href="#new">New</a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link" data-toggle="pill" href="#progress">Inprogress</a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link" data-toggle="pill" href="#verified">Verified</a>
+          </li>
+          <li class="nav-item" >
+            <a class="nav-link" data-toggle="pill" href="#rejected">Rejected</a>
+          </li>
+        </ul>
 
-      <div class="row tab-content">
-        <!-- new request -->
-        <div
-          class="table_parent_div col-lg-11 col-md-11  tab-pane active"
-          style="padding-bottom: 3%"
-          id="new"
-        >
-          <div class="table_card" id="menu3">
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Sr.No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Date of Birth</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Mobile Number</th>
-                  <th scope="col">Document Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- for driver request -->
-                {% for i in data %}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>{{i.full_name}}</td>
-                  <td style="color: green">New</td>
-                  <td>{{i.date_of_birth }}</td>
-                  <td>{{i.email}}</td>
-                  <td>
-                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                  </td>
-                  <td>{{i.contact_number}}</td>
-                  <td style="color: red">Not Verified</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
+        <div class="row tab-content">
+          <!-- new request -->
+          <div
+            class="table_parent_div col-lg-11 col-md-11 tab-pane active"
+            style="padding-bottom: 3%"
+            id="new"
+          >
+            <div class="table_card" id="menu3">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Document Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- for driver request -->
+                  {% for i in data %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class="table_body_text">{{i.full_name}}</td>
+                    <td style="color: green;  font-weight: bold; ">New</td>
+                    <td class="table_body_text">{{i.date_of_birth }}</td>
+                    <td class="table_body_text">{{i.email}}</td>
+                    <td class="table_body_text">
+                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                    </td>
+                    <td class="table_body_text">{{i.contact_number}}</td>
+                    <td style="color: red">Not Verified</td>
+                    <td class="table_body_text">
+                      <p id="rcorners1" class="button" onclick="handleRequest()">Handle</p>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Inprogress -->
+          <div
+            class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
+            style="padding-bottom: 3%"
+            id="progress"
+          >
+            <div class="table_card" id="menu3">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Document Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- for driver request -->
+                  {% for i in data %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>{{i.full_name}}</td>
+                    <td style="color: #f1ae28">Inprogress</td>
+                    <td>{{i.date_of_birth }}</td>
+                    <td>{{i.email}}</td>
+                    <td>
+                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                    </td>
+                    <td>{{i.contact_number}}</td>
+                    <td style="color: #f1ae28">Reviewing</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Verified -->
+          <div
+            class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
+            style="padding-bottom: 3%"
+            id="verified"
+          >
+            <div class="table_card" id="menu3">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Document Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- for driver request -->
+                  {% for i in data %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>{{i.full_name}}</td>
+                    <td style="color: #9647d6">Close</td>
+                    <td>{{i.date_of_birth }}</td>
+                    <td>{{i.email}}</td>
+                    <td>
+                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                    </td>
+                    <td>{{i.contact_number}}</td>
+                    <td style="color: #24d52a">Verified</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Rejected -->
+          <div
+            class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
+            style="padding-bottom: 3%"
+            id="rejected"
+          >
+            <div class="table_card" id="menu3">
+              <table class="table table-striped">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Sr.No</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Date of Birth</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Mobile Number</th>
+                    <th scope="col">Document Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- for driver request -->
+                  {% for i in data %}
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td>{{i.full_name}}</td>
+                    <td style="color: red">Rejected</td>
+                    <td>{{i.date_of_birth }}</td>
+                    <td>{{i.email}}</td>
+                    <td>
+                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                    </td>
+                    <td>{{i.contact_number}}</td>
+                    <td style="color: red">Non-Verified</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-
-        <!-- Inprogress -->
-        <div
-          class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
-          style="padding-bottom: 3%"
-          id="progress"
-        >
-          <div class="table_card" id="menu3">
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Sr.No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Date of Birth</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Mobile Number</th>
-                  <th scope="col">Document Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- for driver request -->
-                {% for i in data %}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>{{i.full_name}}</td>
-                  <td style="color: #F1AE28">Inprogress</td>
-                  <td>{{i.date_of_birth }}</td>
-                  <td>{{i.email}}</td>
-                  <td>
-                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                  </td>
-                  <td>{{i.contact_number}}</td>
-                  <td style="color: #F1AE28">Reviewing</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Verified -->
-        <div
-          class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
-          style="padding-bottom: 3%"
-          id="verified"
-        >
-          <div class="table_card" id="menu3">
-            <table class="table table-striped">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">Sr.No</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Date of Birth</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Mobile Number</th>
-                  <th scope="col">Document Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- for driver request -->
-                {% for i in data %}
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>{{i.full_name}}</td>
-                  <td style="color: #9647D6">Close</td>
-                  <td>{{i.date_of_birth }}</td>
-                  <td>{{i.email}}</td>
-                  <td>
-                    {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                  </td>
-                  <td>{{i.contact_number}}</td>
-                  <td style="color: #24D52A">Verified</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Rejected -->
-        <div
-        class="table_parent_div col-lg-11 col-md-11  tab-pane fade in"
-        style="padding-bottom: 3%"
-        id="rejected"
-      >
-        <div class="table_card" id="menu3">
-          <table class="table table-striped">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Sr.No</th>
-                <th scope="col">Name</th>
-                <th scope="col">Status</th>
-                <th scope="col">Date of Birth</th>
-                <th scope="col">Email</th>
-                <th scope="col">Address</th>
-                <th scope="col">Mobile Number</th>
-                <th scope="col">Document Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- for driver request -->
-              {% for i in data %}
-              <tr>
-                <td>&nbsp;</td>
-                <td>{{i.full_name}}</td>
-                <td style="color: red">Rejected</td>
-                <td>{{i.date_of_birth }}</td>
-                <td>{{i.email}}</td>
-                <td>
-                  {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
-                </td>
-                <td>{{i.contact_number}}</td>
-                <td style="color: red">Non-Verified</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        </div>
-
       </div>
-
-
-    </div>
     </section>
 
     <!-- scripts -->
@@ -311,6 +310,5 @@
         sidebar.classList.toggle("active");
       };
     </script>
-
-    </body>
+  </body>
 </html>

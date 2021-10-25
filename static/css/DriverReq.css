@@ -1,230 +1,253 @@
 .navigation_bar {
-    position: relative;
-    width: calc(100% - 78px);
-    background-color: #ac52f5;
-    margin-left: 78.5px;
-  }
-  .sidebar {
-    position: absolute;
-    height: 100%;
-    width: 78px;
-    background: #11101d;
-    padding: 6px 14px;
-    transition: all 0.2s ease;
-  }
-  .sidebar.active ~ .navigation_bar {
-    width: calc(100% - 240px);
-    left: 161px;
-  }
-  .loader {
-    border: 16px solid #f3f3f3;
-    border-radius: 50%;
-    border-top: 16px solid purple;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite; /* Safari */
-    animation: spin 2s linear infinite;
-    margin-left: 45%;
-  }
-
-  /* Safari */
-  @-webkit-keyframes spin {
-    0% {
-      -webkit-transform: rotate(0deg);
-    }
-    100% {
-      -webkit-transform: rotate(360deg);
-    }
-  }
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  .parentdiv{
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    /* width: calc(100% - 78px);
-    height: 100vh; */
-    margin-left: 80px;
-    padding: 20px;
-    flex-wrap: wrap;
-  }
-  .parentdiv .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 21%;
-    height: 80%;
-    padding: 20px;
-    margin-left: 20px;
-  }
-  .sidebar.active ~ .parentdiv {
-    /* width: calc(100% - 240px); */
-    left: 140px;
-    font-size: 12.1px;
-    margin-right: 250px;
-    width: 90%;
-    height: 100vh;
-  }
-  .sidebar.active ~ .parentdiv .text_res {
-    padding: 3px;
-  }
-  .card img {
-    float: left;
-    top: 40%;
-  }
-  .card-text {
-    margin-left: 35px;
-  }
-  .btns-group{
-    background-color: red;
-    margin-left: 150px;
-    padding: 20px 10px;
-  }
-  .parentdiv .row .col-lg-1 .reqOptions button:focus {
-    outline: blue auto 5px; 
+  position: relative;
+  width: calc(100% - 78px);
+  background-color: #ac52f5;
+  margin-left: 78.5px;
 }
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  .table_parent_div {
-    position: relative;
-  }
-  .table_parent_div .table_card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 10px 0;
-    box-sizing: border-box;
-    box-sizing: border-box;
-    border: 1px solid #fff;
-    overflow-y: scroll;
-    height: 600px;
-  }
+.sidebar {
+  position: absolute;
+  height: 100%;
+  width: 78px;
+  background: #11101d;
+  padding: 6px 14px;
+  transition: all 0.2s ease;
+}
+.sidebar.active ~ .navigation_bar {
+  width: calc(100% - 240px);
+  left: 161px;
+}
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid purple;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin-left: 45%;
+}
 
-  .table_card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+/* Safari */
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
   }
-  .navbar-brand {
-    color: white;
-    align-items: center;
+  100% {
+    -webkit-transform: rotate(360deg);
   }
-  .nanbar-user {
-    float: right;
-    padding: 12px;
-    color: white;
-    text-decoration: none;
-    font-size: 17px;
-    font-family: sans-serif;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  .navigation_bar .navbar .container-fluid .bx {
-    margin-top: 4px;
-    float: right;
-    padding: 14px;
-    color: white;
-    text-decoration: none;
-    height: 50px;
-    width: 50px;
+  100% {
+    transform: rotate(360deg);
   }
-  .list_graph {
-    position: absolute;
-    /* width: calc(100% - 78px); */
-    width: 100%;
-    margin-top: 180px;
-    margin-left: 100px;
-    margin-bottom: 25px;
-  }
-  .sidebar.active ~ .list_graph {
-    width: calc(100% - 240px);
-    left: 160px;
-  }
-  .sidebar.sidebar.active ~ .parenttab{
-    width: calc(100% - 240px);
-    left: 160px;
-  }
-  .table {
-    counter-reset: serial-number;
-  }
-  .table td:first-child:before {
-    counter-increment: serial-number; /* Increment the serial number counter */
-    content: counter(serial-number); /* Display the counter */
-  }
-  .circle {
-    position: relative;
-    top: 26px;
-    left: 26px;
-    width: 100px;
-    height: 100px;
-    padding: 10px;
-    border-radius: 100%;
-    background-color: #F1F1F1;
-  }
-  .circle-border {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-    background: linear-gradient(135deg, #F1AE28 40%, #693195 0%);
-  }
-  .sidebar.active ~ .list_graph .row .graph_cards .circle-border{
-    background: linear-gradient(135deg, #F1AE28 40%, #24D52A 0%);
-  }
-  .span_circle .span_a {
-    background: #fff;
-    color: #000;
-    display: inline-block;
-    border-radius: 100%;
-    padding: 5px 5.5px;
-    float: right;
-    margin: 65px -30px 0px 0px;
-  }
-  .span_circle .span_b{
-    background: #fff;
-    color: #000;
-    display: inline-block;
-    border-radius: 100%;
-    padding: 5px 5.5px;
-    float: left;
-    margin: -15px 0px 10px -30px;
-  }
-  .graph_card{
-    position: relative;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    height: 85%;
-    padding: 10px;
-    background-color: #fff;
-  }
-  .sidebar.active ~ .list_graph .graph_card{
-    width: 31%;
-    color: white;
-    background-color: #6F349D;
-  }
-  .pie_text{
-    display: list-item;
-    float: right; 
-    margin: 15px -175px 0px 0px; 
-    color: #6F349D;
-  }
-  .sidebar.active ~ .list_graph .graph_card .pie_text{
-    color: white;
-  }
-  .graph_card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-  .parenttab{
-    position: absolute;
-    /* width: calc(100% - 78px); */
-    width: 100%;
-    margin-top: 0px;
-    margin-left: 100px;
-    margin-bottom: 25px;
-  }
-  .parenttab .option_tab{
-    margin-left: -10.5px;
-    margin-bottom: 10px;
-  }
-  .option_page{
-    margin-left: -120px;
-  }
+}
+.parentdiv {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  /* width: calc(100% - 78px);
+    height: 100vh; */
+  margin-left: 80px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+.parentdiv .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  width: 21%;
+  height: 80%;
+  padding: 20px;
+  margin-left: 20px;
+}
+.sidebar.active ~ .parentdiv {
+  /* width: calc(100% - 240px); */
+  left: 140px;
+  font-size: 12.1px;
+  margin-right: 250px;
+  width: 90%;
+  height: 100vh;
+}
+.sidebar.active ~ .parentdiv .text_res {
+  padding: 3px;
+}
+.card img {
+  float: left;
+  top: 40%;
+}
+.card-text {
+  margin-left: 35px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.table_parent_div {
+  position: relative;
+}
+.table_parent_div .table_card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  overflow-y: scroll;
+  height: 600px;
+}
+
+.table_card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.navbar-brand {
+  color: white;
+  align-items: center;
+}
+.nanbar-user {
+  float: right;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  font-family: sans-serif;
+}
+.navigation_bar .navbar .container-fluid .bx {
+  margin-top: 4px;
+  float: right;
+  padding: 14px;
+  color: white;
+  text-decoration: none;
+  height: 50px;
+  width: 50px;
+}
+.list_graph {
+  position: absolute;
+  /* width: calc(100% - 78px); */
+  width: 100%;
+  margin-top: 180px;
+  margin-left: 100px;
+  margin-bottom: 25px;
+}
+.sidebar.active ~ .list_graph {
+  width: calc(100% - 240px);
+  left: 160px;
+}
+.table {
+  counter-reset: serial-number;
+}
+.table td:first-child:before {
+  counter-increment: serial-number; /* Increment the serial number counter */
+  content: counter(serial-number); /* Display the counter */
+}
+.circle {
+  position: relative;
+  top: 26px;
+  left: 26px;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 100%;
+  background-color: #f1f1f1;
+}
+.circle-border {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 100%;
+  background: linear-gradient(135deg, #f1ae28 40%, #693195 0%);
+}
+.sidebar.active ~ .list_graph .row .graph_cards .circle-border {
+  background: linear-gradient(135deg, #f1ae28 40%, #24d52a 0%);
+}
+.span_circle .span_a {
+  background: #fff;
+  color: #000;
+  display: inline-block;
+  border-radius: 100%;
+  padding: 5px 5.5px;
+  float: right;
+  margin: 65px -30px 0px 0px;
+}
+.span_circle .span_b {
+  background: #fff;
+  color: #000;
+  display: inline-block;
+  border-radius: 100%;
+  padding: 5px 5.5px;
+  float: left;
+  margin: -15px 0px 10px -30px;
+}
+.graph_card {
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: 85%;
+  padding: 10px;
+  background-color: #fff;
+}
+.sidebar.active ~ .list_graph .graph_card {
+  width: 31%;
+  color: white;
+  background-color: #6f349d;
+}
+.pie_text {
+  display: list-item;
+  float: right;
+  margin: 15px -175px 0px 0px;
+  color: #6f349d;
+}
+.sidebar.active ~ .list_graph .graph_card .pie_text {
+  color: white;
+}
+.graph_card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.parenttab {
+  position: absolute;
+  /* width: calc(100% - 78px); */
+  width: 100%;
+  margin-top: 0px;
+  margin-left: 100px;
+  margin-bottom: 25px;
+}
+.parenttab .option_tab {
+  margin-left: -10.5px;
+  margin-bottom: 10px;
+}
+.sidebar.active ~ .parenttab {
+  width: calc(100% - 240px);
+  left: 160px;
+}
+.option_page {
+  margin-left: -120px;
+}
+.option_tab a {
+  color: #9647d6;
+}
+#rcorners1 {
+  border-radius: 25px;
+  background: #6F349D;
+  padding: 7px;
+  width:150px;
+  text-align:center;
+  color: white;
+}
+p.button:hover {
+  cursor: pointer;
+  box-shadow: 0 16px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+p.padding  {
+  padding:0; margin:0;
+}
+.table_body_text {
+  text-align: left;
+  font: normal normal medium 20px/24px Roboto;
+  letter-spacing: 0.4px;
+  color: #333333;
+  opacity: 1;
+}
+.nav a:active {
+  font: normal normal normal Roboto;
+  color: #737373;
+}
