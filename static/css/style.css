@@ -274,4 +274,6 @@ img {
 #list_graph{
   margin-top: 120px;
 }
-
+.option_tab{
+  margin-left: -120px;
+}
