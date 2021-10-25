@@ -6,6 +6,7 @@ from testapp.sailor_modules.DriverRegistrationRequestModel import driver_regista
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
     RestaurantRegistrationRequestSerializer
 from django.contrib import messages
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -64,8 +65,8 @@ def driverReq(request):
 
     context = {'serializers.data': page_obj, 'data':serializers.data}
 
-
-
-
     return render(request,'DriverReq.html', context)
-   
+
+
+def testfunc(request):
+    return HttpResponse("Aniket Test")

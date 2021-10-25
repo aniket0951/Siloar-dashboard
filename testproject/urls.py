@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from testapp.views import voilaopen, remove, newtry, driverReq
+from testapp.views import voilaopen, remove, newtry, driverReq, testfunc
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,7 @@ urlpatterns = [
     path('newtry', newtry, name="newtry"),
 
     # to show driver request
-    path('driverReq', driverReq, name='driverReq')
+    path('driverReq', driverReq, name='driverReq'),
+    path('testfunc', testfunc , name='testfunc')
+
 ]
