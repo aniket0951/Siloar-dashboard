@@ -25,6 +25,7 @@ urlpatterns = [
 
     # to show driver request
     path('driverReq', driverReq, name='driverReq'),
-    path('testfunc', testfunc , name='testfunc')
+    
+    path('testfunc/<driverid>/', testfunc , name='testfunc')
 
 ]

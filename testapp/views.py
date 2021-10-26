@@ -47,11 +47,9 @@ def newtry(request):
 
 
 def driverReq(request):
-    # return render(request, 'otp_verify.html')
     new_request = driver_registartion_request.objects.all()
     serializers = DriverRegistrationRequestSerializer(new_request, many=True)
     countRe = driver_registartion_request.objects.all().count()
-    # return render(request, 'DriverReq.html', {'data': serializers.data})
 
     p = Paginator(serializers.data, 5)                
     page_num = request.GET.get('page')
@@ -68,5 +66,11 @@ def driverReq(request):
     return render(request,'DriverReq.html', context)
 
 
-def testfunc(request):
-    return HttpResponse("Aniket Test")
+def testfunc(request, driverid):
+    id = str(driverid)
+    
+    driver_info = driver_registartion_request.objects.filter(id=driverid)
+    serializers = DriverRegistrationRequestSerializer(driver_info, many=True)
+
+    context = {'data':serializers.data}
+    return render(request, 'otp_verify.html' ,context)

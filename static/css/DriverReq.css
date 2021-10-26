@@ -251,3 +251,20 @@ p.padding  {
   font: normal normal normal Roboto;
   color: #737373;
 }
+.parenttab .basic_info_card{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+  overflow-y: scroll;
+  height: 600px;
+}
+.parenttab .basic_info_card h4{
+  padding: 10px;
+  text-align: left;  
+  letter-spacing: 0.48px;
+  color: #333333;
+  opacity: 1;
+}
+
