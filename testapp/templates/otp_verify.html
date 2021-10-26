@@ -130,14 +130,14 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#rejected"
+            <a class="nav-link" data-toggle="pill" href="#vehicledocument"
               >Vehicle Document</a
             >
           </li>
         </ul>
 
         <div class="row tab-content">
-          <!-- new request -->
+          <!-- Basic Information -->
           <div
             class="table_parent_div col-lg-11 col-md-11 tab-pane active"
             style="padding-bottom: 3%"
@@ -159,7 +159,7 @@
                 <input type="text" value="{{i.date_of_birth}}" /><br /><br />
               </div>
               {% endfor %}
-              <a>
+              <a href="{% url 'verifyBasicInfo' %}">
                 <p
                   id="rcorners1"
                   class="button"
@@ -202,7 +202,7 @@
                 <input type="text" value="{{i.pin_code}}" /><br /><br />
               </div>
               {% endfor %}
-              <a>
+              <a href="{% url 'verifyAddressInfo' %}">
                 <p
                   id="rcorners1"
                   class="button"
@@ -214,7 +214,7 @@
             </div>
           </div>
 
-          <!-- Verified -->
+          <!-- KYC Details -->
           <div
             class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
             style="padding-bottom: 3%"
@@ -226,7 +226,7 @@
                 <img
                   src="{{finaldata.aadhar_front_photo}}"
                   alt="abc"
-                  style="width: 500px; height: 500px; margin-left: 25px"
+                  style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
                 />
               </figure>
 
@@ -235,7 +235,7 @@
                 <img
                   src="{{finaldata.aadhar_back_photo}}"
                   alt=""
-                  style="width: 500px; height: 500px; margin-left: 25px"
+                  style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
                 />
               </figure>
 
@@ -244,7 +244,7 @@
                 <img
                 src="{{finaldata.licence_front_photo}}"
                 alt=""
-                style="width: 500px; height: 500px; margin-left: 25px"
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
               />
               </figure>
               
@@ -253,7 +253,7 @@
                 <img
                 src="{{finaldata.licence_back_photo}}"
                 alt=""
-                style="width: 500px; height: 500px; margin-left: 25px"
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
               />
               </figure>
 
@@ -262,20 +262,145 @@
                 <img
                   src="{{finaldata.passport_size_photo}}"
                   alt=""
-                  style="width: 500px; height: 500px; margin-left: 25px"
+                  style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
                 />
               </figure>
+              <a href="{% url 'verifyKYCDocument' %}">
+                <p
+                  id="rcorners1"
+                  class="button"
+                  style="margin-left: 25px; font-weight: 10px"
+                >
+                  Verify and Next
+                </p>
+              </a>
             </div>
           </div>
 
-          <!-- Rejected -->
+          <!-- Vehicle Information -->
           <div
             class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
             style="padding-bottom: 3%"
             id="rejected"
           >
-            <div class="table_card" id="menu3"></div>
+          <div class="table_card" id="menu3">
+            {% for i in data %}
+
+            <div class="input-group">
+              <label>Vehicle RTO Registration Number</label>
+              <input type="text" value="{{i.vehicle_RTO_registration_number}}" /><br /><br />
+  
+              <label>Vehicle RC Number</label>
+              <input type="text" value="{{i.vehicle_rc_number}}" /><br /><br />
+  
+              <label>Vehicle Color</label>
+              <input type="text" value="{{i.vehicle_colour}}" /><br /><br />
+  
+              <label>Vehicle Make Year</label>
+              <input type="text" value="{{i.vehicle_make_year}}" /><br /><br />
+  
+              <label>Vehicle Type</label>
+              <input type="text" value="{{i.vehicle_type}}" /><br /><br />
+            </div>
+  
+            {% endfor %}
+            <a href="{% url 'verifyVehicleInfo' %}">
+              <p
+                id="rcorners1"
+                class="button"
+                style="margin-left: 25px; font-weight: 10px"
+              >
+                Verify and Next
+              </p>
+            </a>
           </div>
+          </div>
+
+          <!-- Vehicle Document -->
+          <div
+          class="table_parent_div col-lg-11 col-md-11 tab-pane fade in"
+          style="padding-bottom: 3%"
+          id="vehicledocument"
+        >
+          <div class="table_card" id="menu3">
+            <figure>
+              <h2 style="margin-left: 20px">Vehicle Front Photo</h2>
+              {% if finaldata %}
+                <img
+                  src="{{finaldata.vehicle_front_photo}}"
+                  alt="abc"
+                  style="width: 500px; height: 500px; margin-left: 25px;  border: 2px solid #000;"
+                />
+              {% else %}
+              <h1>Image not found</h1>
+              {% endif %}  
+            </figure>
+
+            <figure>
+              <h2 style="margin-left: 20px">Vehicle Back Photo</h2>
+              <img
+                src="{{finaldata.vehicle_back_photo}}"
+                alt=""
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+              />
+            </figure>
+
+            <figure>
+            <h3 style="margin-left: 20px">Vehicle Left Photo</h3>
+              <img
+              src="{{finaldata.vehicle_left_photo}}"
+              alt=""
+              style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+            />
+            </figure>
+            
+            <figure>
+            <h3 style="margin-left: 25px">Vehicle Right Photo</h3>
+              <img
+              src="{{finaldata.vehicle_right_photo}}"
+              alt=""
+              style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+            />
+            </figure>
+
+            <figure>
+              <h3 style="margin-left: 20px">Vehicle RC</h3>
+              <img
+                src="{{finaldata.vehicle_rc}}"
+                alt=""
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+              />
+            </figure>
+
+            <figure>
+              <h3 style="margin-left: 20px">Vehicle Insurance</h3>
+              <img
+                src="{{finaldata.vehicle_insurance}}"
+                alt=""
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+              />
+            </figure>
+
+            <figure>
+              <h3 style="margin-left: 20px">Vehicle Permit</h3>
+              <img
+                src="{{finaldata.vehicle_permit}}"
+                alt=""
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;"
+              />
+            </figure>
+            <a href="{% url 'verifyVehicleDocument' %}">
+              <p
+                id="rcorners1"
+                class="button"
+                style="margin-left: 25px; font-weight: 10px"
+              >
+                Verify and Next
+              </p>
+            </a>
+          </div>
+          </div>
+
         </div>
       </div>
     </section>

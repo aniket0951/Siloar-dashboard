@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from testapp.views import voilaopen, remove, newtry, driverReq, testfunc
+from testapp.views import voilaopen, remove, newtry, driverReq, testfunc , VerifyBasicInfo, VerifyAddressInfo, VerifyKYCDocument , VerifyVehicleInfo, VerifyVehicleDocument
 from django.conf.urls.static import static
 from django.conf import settings
  
@@ -28,6 +28,21 @@ urlpatterns = [
     # to show driver request
     path('driverReq', driverReq, name='driverReq'),
     
-    path('testfunc/<driverid>/', testfunc , name='testfunc')
+    path('testfunc/<driverid>/', testfunc , name='testfunc'),
+
+    # verify the basic info
+    path('VerifyBasicInfo', VerifyBasicInfo, name="verifyBasicInfo"),
+
+    # verify the address information
+    path('VerifyAddressInfo', VerifyAddressInfo, name="verifyAddressInfo"),
+
+    # verify the kyc information
+    path('VerifyKYCDocument', VerifyKYCDocument, name="verifyKYCDocument"),
+    
+    # verify the vehicle  information
+    path('VerifyVehicleInfo', VerifyVehicleInfo, name="verifyVehicleInfo"),
+
+        # verify the vehicle  information
+    path('VerifyVehicleDocument', VerifyVehicleDocument, name="verifyVehicleDocument"),
 
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

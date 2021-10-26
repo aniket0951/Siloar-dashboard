@@ -1,13 +1,15 @@
+import json
+import requests
+
+from django.contrib import messages
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.core.paginator import Paginator
+from django.http import HttpResponse
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
     restaurant_registration_request
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
     RestaurantRegistrationRequestSerializer
-from django.contrib import messages
-from django.http import HttpResponse
-import json, requests
 
 
 # Create your views here.
@@ -48,7 +50,7 @@ def newtry(request):
 
 
 def driverReq(request):
-    new_request = driver_registartion_request.objects.all()
+    new_request = driver_registartion_request.objects.filter(status=5)
     serializers = DriverRegistrationRequestSerializer(new_request, many=True)
     countRe = driver_registartion_request.objects.all().count()
 
@@ -83,3 +85,18 @@ def testfunc(request, driverid):
                'finaldata': finaldata
                }
     return render(request, 'otp_verify.html', context)
+
+def VerifyBasicInfo(request):
+    return HttpResponse("This is Basic verification")
+
+def VerifyAddressInfo(request):
+    return HttpResponse("This is Address Verification")
+
+def VerifyKYCDocument(request):
+    return HttpResponse("This is KYC Verification") 
+
+def VerifyVehicleInfo(request):
+    return HttpResponse("This is Vehicle Info Verification") 
+
+def VerifyVehicleDocument(request):
+    return HttpResponse("This is Vehicle Document Verification") 
