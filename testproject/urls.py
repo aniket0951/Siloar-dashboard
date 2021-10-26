@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from testapp.views import voilaopen, remove, newtry, driverReq, testfunc
-
+from django.conf.urls.static import static
+from django.conf import settings
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('voilaopen', voilaopen,name='index'),
@@ -28,4 +30,4 @@ urlpatterns = [
     
     path('testfunc/<driverid>/', testfunc , name='testfunc')
 
-]
+]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

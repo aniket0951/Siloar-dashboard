@@ -134,8 +134,11 @@ PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..')
 SITE_ROOT = PROJECT_ROOT
 
 
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
-MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
+# MEDIA_URL = '/media/'
+
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/uploads/kycdoc/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

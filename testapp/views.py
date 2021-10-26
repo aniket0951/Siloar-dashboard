@@ -7,6 +7,7 @@ from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSeriali
     RestaurantRegistrationRequestSerializer
 from django.contrib import messages
 from django.http import HttpResponse
+import json, requests
 
 
 # Create your views here.
@@ -51,7 +52,7 @@ def driverReq(request):
     serializers = DriverRegistrationRequestSerializer(new_request, many=True)
     countRe = driver_registartion_request.objects.all().count()
 
-    p = Paginator(serializers.data, 5)                
+    p = Paginator(serializers.data, 5)
     page_num = request.GET.get('page')
 
     try:
@@ -61,16 +62,24 @@ def driverReq(request):
     except EmptyPage:
         page_obj = p.page(p.num_pages)
 
-    context = {'serializers.data': page_obj, 'data':serializers.data}
+    context = {'serializers.data': page_obj, 'data': serializers.data}
 
-    return render(request,'DriverReq.html', context)
+    return render(request, 'DriverReq.html', context)
 
 
 def testfunc(request, driverid):
-    id = str(driverid)
-    
     driver_info = driver_registartion_request.objects.filter(id=driverid)
     serializers = DriverRegistrationRequestSerializer(driver_info, many=True)
+    token = str(serializers.data[0]["request_token"])
 
-    context = {'data':serializers.data}
-    return render(request, 'otp_verify.html' ,context)
+    url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
+
+    r = requests.get(url)
+    result = json.loads(r.text)
+
+    for i in result:
+        finaldata = i
+    context = {'data': serializers.data,
+               'finaldata': finaldata
+               }
+    return render(request, 'otp_verify.html', context)
