@@ -73,3 +73,16 @@ class restaurant_registration_request(models.Model):
     class Meta:
         db_table = 'restaurant_registration_request'
 
+# ------- driver verification of provided request ---------
+class driver_verification(models.Model):
+    request_token = models.TextField(null=True, blank=True)
+    is_basic_verified = models.IntegerField(null=True, blank=True)
+    is_address_verified = models.IntegerField(null=True, blank=True)
+    is_kyc_verified = models.IntegerField(null=True, blank=True)
+    is_vehicle_info_verified = models.IntegerField(null=True, blank=True)
+    is_vehicle_document_verified = models.IntegerField(null=True, blank=True)
+    is_account_verified = models.IntegerField(null=True, blank=True)
+    is_account_rejected = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'driver_verification'

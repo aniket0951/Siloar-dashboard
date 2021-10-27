@@ -87,7 +87,7 @@ def testfunc(request, driverid):
     return render(request, 'otp_verify.html', context)
 
 def VerifyBasicInfo(request):
-    return HttpResponse("This is Basic verification")
+    return redirect('testfunc', 1)
 
 def VerifyAddressInfo(request):
     return HttpResponse("This is Address Verification")
