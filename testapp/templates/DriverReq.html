@@ -160,12 +160,12 @@
                     <td class="table_body_text">{{i.date_of_birth }}</td>
                     <td class="table_body_text">{{i.email}}</td>
                     <td class="table_body_text">
-                      {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                      {{i.house_number| add:i.building_name|add:i.street_name|add:i.landmark}}
                     </td>
                     <td class="table_body_text">{{i.contact_number}}</td>
                     <td style="color: red">Not Verified</td>
                     <td class="table_body_text" >
-                      <a href="{% url 'testfunc' i.id %}" > 
+                      <a href="{% url 'handlereq' i.id %}" > 
                           <p  id="rcorners1" class="button">Handle</p>
                       </a>
                     </td>
@@ -198,7 +198,7 @@
                 </thead>
                 <tbody>
                   <!-- for driver request -->
-                  {% for i in data %}
+                  {% for i in inprogress_data %}
                   <tr>
                     <td>&nbsp;</td>
                     <td>{{i.full_name}}</td>
@@ -239,7 +239,7 @@
                 </thead>
                 <tbody>
                   <!-- for driver request -->
-                  {% for i in data %}
+                  {% for i in verifyed_data %}
                   <tr>
                     <td>&nbsp;</td>
                     <td>{{i.full_name}}</td>

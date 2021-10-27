@@ -73,6 +73,7 @@ class restaurant_registration_request(models.Model):
     class Meta:
         db_table = 'restaurant_registration_request'
 
+
 # ------- driver verification of provided request ---------
 class driver_verification(models.Model):
     request_token = models.TextField(null=True, blank=True)
