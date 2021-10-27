@@ -3,8 +3,9 @@ from testapp.sailor_modules.DriverRegistrationRequestModel import driver_regista
 
 
 # Create your models here.
-# def DriverRegistrationRequest():
-#     return driver_registartion_request()
+def DriverRegistrationRequest():
+    return driver_registartion_request()
+
 
 # driver verification
 def DriverVerification():

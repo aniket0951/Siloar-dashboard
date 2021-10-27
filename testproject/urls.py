@@ -15,34 +15,35 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from testapp.views import voilaopen, remove, newtry, driverReq, testfunc , VerifyBasicInfo, VerifyAddressInfo, VerifyKYCDocument , VerifyVehicleInfo, VerifyVehicleDocument
+from testapp.views import voilaopen, remove, newtry, driverReq, testfunc, VerifyBasicInfo, VerifyAddressInfo, \
+    VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument
 from django.conf.urls.static import static
 from django.conf import settings
- 
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('voilaopen', voilaopen,name='index'),
-    path('remove', remove, name='remove'),
-    path('newtry', newtry, name="newtry"),
+                  path('admin/', admin.site.urls),
+                  path('voilaopen', voilaopen, name='index'),
+                  path('remove', remove, name='remove'),
+                  path('newtry', newtry, name="newtry"),
 
-    # to show driver request
-    path('driverReq', driverReq, name='driverReq'),
-    
-    path('testfunc/<driverid>/', testfunc , name='testfunc'),
+                  # to show driver request
+                  path('driverReq', driverReq, name='driverReq'),
 
-    # verify the basic info
-    path('VerifyBasicInfo', VerifyBasicInfo, name="verifyBasicInfo"),
+                  path('testfunc/<driverid>/', testfunc, name='handlereq'),
 
-    # verify the address information
-    path('VerifyAddressInfo', VerifyAddressInfo, name="verifyAddressInfo"),
+                  # verify the basic info
+                  path('VerifyBasicInfo/<str:token>/<int:driverid>/', VerifyBasicInfo, name="verifyBasicInfo"),
 
-    # verify the kyc information
-    path('VerifyKYCDocument', VerifyKYCDocument, name="verifyKYCDocument"),
-    
-    # verify the vehicle  information
-    path('VerifyVehicleInfo', VerifyVehicleInfo, name="verifyVehicleInfo"),
+                  # verify the address information
+                  path('VerifyAddressInfo/<str:token>/<int:driverid>/', VerifyAddressInfo, name="verifyAddressInfo"),
 
-        # verify the vehicle  information
-    path('VerifyVehicleDocument', VerifyVehicleDocument, name="verifyVehicleDocument"),
+                  # verify the kyc information
+                  path('VerifyKYCDocument', VerifyKYCDocument, name="verifyKYCDocument"),
 
-]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  # verify the vehicle  information
+                  path('VerifyVehicleInfo', VerifyVehicleInfo, name="verifyVehicleInfo"),
+
+                  # verify the vehicle  information
+                  path('VerifyVehicleDocument', VerifyVehicleDocument, name="verifyVehicleDocument"),
+
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

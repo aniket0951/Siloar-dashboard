@@ -40,7 +40,7 @@
         </li>
 
         <li>
-          <a href="driverReq">
+          <a href="{% url 'driverReq' %}">
             <i class="bx bxs-car"></i>
             <span class="links_name">Driver Request</span>
           </a>
@@ -108,29 +108,32 @@
     <!-- card view to show all driver information -->
     <section class="parenttab">
       <div class="">
-        <ul class="nav nav-pills option_tab" role="tablist">
+
+        <ul class="nav nav-pills option_tab" id="myTab" role="tablist">
+          
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" href="#new"
+            <a class="nav-link active" data-toggle="tab" href="#new" 
               >Basic Information</a
             >
           </li>
+         
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#progress"
+            <a class="nav-link" data-toggle="tab" href="#progress" 
               >Address Information</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#verified"
+            <a class="nav-link" data-toggle="tab" href="#verified" 
               >KYC Details</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#rejected"
+            <a class="nav-link" data-toggle="tab" href="#rejected" 
               >Vehicle Information</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#vehicledocument"
+            <a class="nav-link" data-toggle="tab" href="#vehicledocument" 
               >Vehicle Document</a
             >
           </li>
@@ -139,36 +142,48 @@
         <div class="row tab-content">
           <!-- Basic Information -->
           <div
-            class="table_parent_div col-lg-11 col-md-11 tab-pane active"
-            style="padding-bottom: 3%"
-            id="new"
-          >
-            <div class="basic_info_card" id="menu3">
-              {% for i in data %}
-              <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" value="{{i.full_name}}" /><br /><br />
+          class="table_parent_div col-lg-11 col-md-11 tab-pane active"
+          style="padding-bottom: 3%"
+          id="new"
+        >
+          <div class="basic_info_card" id="menu3">
+            {% for i in data %}
+            <div class="input-group">
+              <label>Full Name</label>
+              <input type="text" value="{{i.full_name}}" /><br /><br />
 
-                <label>Email</label>
-                <input type="text" value="{{i.email}}" /><br /><br />
+              <label>Email</label>
+              <input type="text" value="{{i.email}}" /><br /><br />
 
-                <label>Contact Number</label>
-                <input type="text" value="{{i.contact_number}}" /><br /><br />
+              <label>Contact Number</label>
+              <input type="text" value="{{i.contact_number}}" /><br /><br />
 
-                <label>Date of Birth</label>
-                <input type="text" value="{{i.date_of_birth}}" /><br /><br />
-              </div>
-              {% endfor %}
-              <a href="{% url 'verifyBasicInfo' %}">
-                <p
-                  id="rcorners1"
-                  class="button"
-                  style="margin-left: 25px; font-weight: 10px"
-                >
-                  Verify and Next
-                </p>
-              </a>
+              <label>Date of Birth </label>
+              <input type="text" value="{{i.date_of_birth}}" /><br /><br />
+
             </div>
+            <div>
+              {% if messages %}
+              {% for message in messages %}
+                {% if message.tags == "error"%}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red; margin-left: 10px;">{{ message }}</li>
+                {% else %}
+                <li style="color: green; margin-left: 10px;">{{ message }}</li>
+                 {% endif %}
+              {% endfor %}
+             {% endif %}
+              </div>
+            <a href="{% url 'verifyBasicInfo' i.request_token driverid %}">
+              <p
+                id="rcorners1"
+                class="button"
+                style="margin-left: 25px; font-weight: 10px"
+              >
+                Verify
+              </p>
+            </a>
+            {% endfor %}
+          </div>
           </div>
 
           <!-- Address -->
@@ -201,16 +216,27 @@
                 <label>Pin Code</label>
                 <input type="text" value="{{i.pin_code}}" /><br /><br />
               </div>
-              {% endfor %}
-              <a href="{% url 'verifyAddressInfo' %}">
+              <div>
+                {% if messages %}
+                {% for message in messages %}
+                  {% if message.tags == "error"%}
+                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red; margin-left: 10px;">{{ message }}</li>
+                  {% else %}
+                  <li style="color: green; margin-left: 10px;">{{ message }}</li>
+                   {% endif %}
+                {% endfor %}
+               {% endif %}
+              </div>
+              <a href="{% url 'verifyAddressInfo' i.request_token driverid %}">
                 <p
                   id="rcorners1"
                   class="button"
                   style="margin-left: 25px; font-weight: 10px"
                 >
-                  Verify and Next
+                  Verify
                 </p>
               </a>
+              {% endfor %}
             </div>
           </div>
 
@@ -271,7 +297,7 @@
                   class="button"
                   style="margin-left: 25px; font-weight: 10px"
                 >
-                  Verify and Next
+                  Verify
                 </p>
               </a>
             </div>
@@ -310,7 +336,7 @@
                 class="button"
                 style="margin-left: 25px; font-weight: 10px"
               >
-                Verify and Next
+                Verify
               </p>
             </a>
           </div>
@@ -417,8 +443,18 @@
       searchBtn.onclick = function () {
         sidebar.classList.toggle("active");
       };
-
-      
     </script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+              $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+
+      var activeTab = localStorage.getItem('activeTab');
+      if(activeTab){
+          $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+      }
+     });
+    </script> 
   </body>
 </html>
