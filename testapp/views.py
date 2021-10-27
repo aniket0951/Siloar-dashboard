@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
-    restaurant_registration_request
+    restaurant_registration_request, driver_verification
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
-    RestaurantRegistrationRequestSerializer
+    RestaurantRegistrationRequestSerializer, DriverVerificationSerializer
 
 
 # Create your views here.
@@ -99,4 +99,4 @@ def VerifyVehicleInfo(request):
     return HttpResponse("This is Vehicle Info Verification") 
 
 def VerifyVehicleDocument(request):
-    return HttpResponse("This is Vehicle Document Verification") 
+    return HttpResponse("This is Vehicle Document Verification")
