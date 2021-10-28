@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from testapp.views import voilaopen, remove, newtry, driverReq, testfunc, VerifyBasicInfo, VerifyAddressInfo, \
-    VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument
+    VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument, RejectKYCDocument
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -46,4 +46,6 @@ urlpatterns = [
                   # verify the vehicle  information
                   path('VerifyVehicleDocument', VerifyVehicleDocument, name="verifyVehicleDocument"),
 
+                  # reject the driver kyc document
+                  path('RejectKYCDocument/<str:doc_name>/<int:driverid>/', RejectKYCDocument, name="rejectKYCDocument")
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

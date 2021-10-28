@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
-    restaurant_registration_request, driver_verification
+    restaurant_registration_request, driver_verification, driver_document_verification
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
-    RestaurantRegistrationRequestSerializer, DriverVerificationSerializer
+    RestaurantRegistrationRequestSerializer, DriverDocumentVerificationSerializer
 from rest_framework.decorators import api_view
 
 
@@ -62,7 +62,7 @@ def driverReq(request):
     # verify_serializer = DriverRegistrationRequestSerializer(verifyed_data, many=True)
 
     context = {'data': serializers.data, 'inprogress_data': serializers.data, 'verifyed_data': serializers.data}
-
+    print(serializers.data)
     return render(request, 'DriverReq.html', context)
 
 
@@ -105,6 +105,7 @@ def testfunc(request, driverid):
     return render(request, 'otp_verify.html', context)
 
 
+# --- verify the driver basic information ---
 def VerifyBasicInfo(request, token, driverid):
     if driver_verification.objects.filter(request_token=token).exists():
         if driver_verification.objects.filter(request_token=token, is_basic_verified=1).exists():
@@ -131,6 +132,7 @@ def VerifyBasicInfo(request, token, driverid):
             return redirect('handlereq', driverid)
 
 
+# --- verify the driver address information --
 def VerifyAddressInfo(request, token, driverid):
     if driver_verification.objects.filter(request_token=token).exists():
         if driver_verification.objects.filter(request_token=token, is_address_verified=1).exists():
@@ -159,13 +161,130 @@ def VerifyAddressInfo(request, token, driverid):
     return JsonResponse({'token': token, 'driver': driverid})
 
 
+# --- verify the driver kyc information --
 def VerifyKYCDocument(request):
     return HttpResponse("This is KYC Verification")
 
 
+# ----- verify the driver vehicle information ---
 def VerifyVehicleInfo(request):
     return HttpResponse("This is Vehicle Info Verification")
 
 
+# ----- verify the driver vehicle Document --
 def VerifyVehicleDocument(request):
     return HttpResponse("This is Vehicle Document Verification")
+
+
+# --- reject kyc document ---
+def RejectKYCDocument(request, doc_name, driverid):
+    request_token = driver_registartion_request.objects.filter(id=driverid)
+    serilizer = DriverRegistrationRequestSerializer(request_token, many=True)
+    token = serilizer.data[0]["request_token"]
+
+    if driver_document_verification.objects.filter(request_token=token).exists():
+        return updateRejectDocument(request, token, doc_name)
+    else:
+        return createRejectionDocument(request, token, doc_name)      
+    driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3)
+
+    return HttpResponse(f"This is {doc_name} for rejected document . the driver id is {driverid} and user request token {serilizer.data[0]['request_token']}")
+
+def updateRejectDocument(request, token, doc_name):
+    if doc_name == "aadhar_front_photo":
+       update_rej = driver_document_verification.objects.filter(request_token=token).update(is_aadhar_front=2)
+       if update_rej:
+           driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3, aadhaar_front_photo=None)
+           messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+           return redirect('driverReq')
+       else:
+           messages.error(request, "Document rejection failed Please try again ...")
+           return redirect('driverReq')    
+    elif doc_name == "aadhar_back_photo":
+        update_rej = driver_document_verification.objects.filter(request_token=token).update(is_aadhar_back=2)
+        if update_rej:
+           driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3)
+           messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+           return redirect('driverReq')
+        else:
+           messages.error(request, "Document rejection failed Please try again ...")
+           return redirect('driverReq')    
+    elif doc_name == "licence_front_photo":
+        update_rej = driver_document_verification.objects.filter(request_token=token).update(is_licence_front=2)
+        if update_rej:
+           driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3)
+           messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+           return redirect('driverReq')
+        else:
+           messages.error(request, "Document rejection failed Please try again ...")
+           return redirect('driverReq')    
+    elif doc_name == "licence_back_photo":
+        update_rej = driver_document_verification.objects.filter(request_token=token).update(is_licence_back=2)
+        if update_rej:
+           driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3)
+           messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+           return redirect('driverReq')
+        else:
+           messages.error(request, "Document rejection failed Please try again ...")
+           return redirect('driverReq')    
+    elif doc_name == "passport_size_photo":
+        update_rej = driver_document_verification.objects.filter(request_token=token).update(is_passport_size=2)
+        if update_rej:
+           driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3)
+           messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+           return redirect('driverReq')
+        else:
+           messages.error(request, "Document rejection failed Please try again ...")
+           return redirect('driverReq')     
+    else:
+        messages.error(request, "Invalid Document to reject please try again..")
+        return redirect('driverReq')                 
+
+def createRejectionDocument(request, token, doc_name):
+    if doc_name == "aadhar_front_photo":
+        reject_aadhar_f = driver_document_verification.objects.create(request_token=token, is_aadhar_front=2)
+        if reject_aadhar_f:
+            driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3, aadhaar_front_photo=None)
+            messages.success(request, "Document rejected successfully...Please take review in 24 hours")
+            return redirect('driverReq')
+        else:
+            messages.error(request, "Document rejection failed....")
+            return redirect('driverReq')
+    elif doc_name == "aadhar_back_photo":
+        reject_aadhar_f = driver_document_verification.objects.create(request_token=token, is_aadhar_back=2)
+        if reject_aadhar_f:
+            messages.success(request, "Document rejected successfully...")
+            return redirect('driverReq')
+        else:
+            messages.error(request, "Document rejection failed....")
+            return redirect('driverReq')
+
+    elif doc_name == "licence_front_photo":
+        reject_aadhar_f = driver_document_verification.objects.create(request_token=token, is_licence_front=2)
+        if reject_aadhar_f:
+            messages.success(request, "Document rejected successfully...")
+            return redirect('driverReq')
+        else:
+            messages.error(request, "Document rejection failed....")
+            return redirect('driverReq')
+
+    elif doc_name == "licence_back_photo":
+        reject_aadhar_f = driver_document_verification.objects.create(request_token=token, is_licence_back=2)
+        if reject_aadhar_f:
+            messages.success(request, "Document rejected successfully...")
+            return redirect('driverReq')
+        else:
+            messages.error(request, "Document rejection failed....")
+            return redirect('driverReq')
+
+    elif doc_name == "passport_size_photo":
+        reject_aadhar_f = driver_document_verification.objects.create(request_token=token, is_passport_size=2)
+        if reject_aadhar_f:
+            messages.success(request, "Document rejected successfully...")
+            return redirect('driverReq')
+        else:
+            messages.error(request, "Document rejection failed....")
+            return redirect('driverReq')                      
+    else:
+        messages.error(request, "Invalid Document...")    
+        return redirect('driverReq') 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
-    restaurant_registration_request, driver_verification
+    restaurant_registration_request, driver_verification, driver_document_verification
 
 
 # ----- driver registration request serializers -----
@@ -21,4 +21,11 @@ class RestaurantRegistrationRequestSerializer(serializers.ModelSerializer):
 class DriverVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = driver_verification
+        fields = '__all__'
+
+
+# ------ driver document verification serializers -----
+class DriverDocumentVerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = driver_document_verification
         fields = '__all__'

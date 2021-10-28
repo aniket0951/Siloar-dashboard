@@ -87,3 +87,23 @@ class driver_verification(models.Model):
 
     class Meta:
         db_table = 'driver_verification'
+
+
+# ------- driver document verification -----------------------
+class driver_document_verification(models.Model):
+    request_token = models.TextField(null=True, blank=True)
+    is_aadhar_front = models.TextField(null=True, blank=True)
+    is_aadhar_back = models.TextField(null=True, blank=True)
+    is_licence_front = models.TextField(null=True, blank=True)
+    is_licence_back = models.TextField(null=True, blank=True)
+    is_passport_size = models.TextField(null=True, blank=True)
+    is_vehicle_front = models.TextField(null=True, blank=True)
+    is_vehicle_back = models.TextField(null=True, blank=True)
+    is_vehicle_left = models.TextField(null=True, blank=True)
+    is_vehicle_right = models.TextField(null=True, blank=True)
+    is_vehicle_rc = models.TextField(null=True, blank=True)
+    is_vehicle_insurance = models.TextField(null=True, blank=True)
+    is_vehicle_permit = models.TextField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'driver_document_verification'

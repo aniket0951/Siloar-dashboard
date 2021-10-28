@@ -72,7 +72,8 @@
                   .then((value) => {
                     switch (value) {
                       case "catch":
-                        window.location = "newtry";
+                        // window.location = "newtry";
+                        window.location = "{% url 'newtry' %}"
                         break;
                     }
                   });

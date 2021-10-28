@@ -230,7 +230,7 @@
               <h2 style="margin-left: 20px">Aadhar Front Photo</h2>
               <img src="{{finaldata.aadhar_front_photo}}" alt="abc"
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a >
+                <a href="{% url 'rejectKYCDocument' 'aadhar_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
@@ -246,7 +246,7 @@
               <h2 style="margin-left: 20px">Aadhar Back Photo</h2>
               <img src="{{finaldata.aadhar_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a >
+                <a href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
@@ -262,7 +262,7 @@
               <h3 style="margin-left: 20px">Licence Front Photo</h3>
               <img src="{{finaldata.licence_front_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a >
+                <a href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
@@ -278,7 +278,7 @@
               <h3 style="margin-left: 25px">Licence Back Photo</h3>
               <img src="{{finaldata.licence_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a >
+                <a href="{% url 'rejectKYCDocument' 'licence_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
@@ -294,7 +294,7 @@
               <h3 style="margin-left: 20px">Passport Size Photo</h3>
               <img src="{{finaldata.passport_size_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a >
+                <a href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
