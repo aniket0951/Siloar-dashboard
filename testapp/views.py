@@ -55,14 +55,20 @@ def driverReq(request):
     serializers = DriverRegistrationRequestSerializer(new_request, many=True)
     countRe = driver_registartion_request.objects.all().count()
 
-    # inprogress_data = driver_registartion_request.objects.filter(account_verification_status=2)
-    # in_serializer = DriverRegistrationRequestSerializer(inprogress_data, many=True)
+    # --- get in-progress requests -----
+    inprogress_data = driver_registartion_request.objects.filter(account_verification_status=2)
+    in_serializer = DriverRegistrationRequestSerializer(inprogress_data, many=True)
 
     # verifyed_data = driver_registartion_request.objects.filter(account_verification_status=1)
     # verify_serializer = DriverRegistrationRequestSerializer(verifyed_data, many=True)
 
-    context = {'data': serializers.data, 'inprogress_data': serializers.data, 'verifyed_data': serializers.data}
-    print(serializers.data)
+    # ---- get rejected request or document verification failed ---
+    rejected_data = driver_registartion_request.objects.filter(account_verification_status=3)
+    reject_serial = DriverRegistrationRequestSerializer(rejected_data, many=True)
+
+
+    context = {'data': serializers.data, 'inprogress_data': in_serializer.data, 'verifyed_data': serializers.data , 'reject_data': reject_serial.data}
+    
     return render(request, 'DriverReq.html', context)
 
 
@@ -288,3 +294,94 @@ def createRejectionDocument(request, token, doc_name):
     else:
         messages.error(request, "Invalid Document...")    
         return redirect('driverReq') 
+
+
+def ReviewDriverDocument(request, token, driverid):    
+    if driver_document_verification.objects.filter(request_token=token).exists():
+        reject_status = driver_document_verification.objects.filter(request_token=token)
+        serilizer = DriverDocumentVerificationSerializer(reject_status, many=True)
+
+        registration_data = driver_registartion_request.objects.filter(request_token=token)
+        rej_serializer = DriverRegistrationRequestSerializer(registration_data, many=True)
+        
+        
+        if serilizer.data[0]["is_aadhar_front"] == "2":
+            if bool(rej_serializer.data[0]["aadhaar_front_photo"]):
+                dataa = getAllKYCDocByAPI(token)
+                context = {
+                           'finaldata': dataa[0]['aadhar_front_photo'],
+                            'driverid': driverid,
+                            'tag':"New upload document"
+                        }
+                return render(request, 'ReviewRejectedDocs.html', context)         
+            else:
+                messages.error(request, "Aadhar front photo is rejected prevoiusly . New document not upload by user to verify insted of rejected document")
+                return render(request, 'ReviewRejectedDocs.html')
+
+        elif serilizer.data[0]["is_aadhar_back"] == "2":
+            if bool(rej_serializer.data[0]["aadhaar_back_photo"]):
+                dataa = getAllKYCDocByAPI(token)
+                context = {
+                           'finaldata': dataa[0]['aadhar_back_photo'],
+                            'driverid': driverid,
+                            'tag':"New upload document"
+                        }
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                messages.error(request, "Aadhar Back photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+                return render(request, 'ReviewRejectedDocs.html')
+
+        elif serilizer.data[0]["is_licence_front"] == "2":
+            if bool(rej_serializer.data[0]['licence_front_photo']):
+                dataa = getAllKYCDocByAPI(token)
+                context = {
+                           'finaldata': dataa[0]['licence_front_photo'],
+                            'driverid': driverid,
+                            'tag':"New upload document"
+                        }
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                messages.error(request, "Licence Front photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+                return render(request, 'ReviewRejectedDocs.html')
+
+        elif serilizer.data[0]["is_licence_back"] == "2":
+            if bool(rej_serializer.data[0]["licence_back_photo"]):
+                dataa = getAllKYCDocByAPI(token)
+                context = {
+                           'finaldata': dataa[0]['licence_back_photo'],
+                            'driverid': driverid,
+                            'tag':"New upload document"
+                        }
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                messages.error(request, "Licence Back photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+                return render(request, 'ReviewRejectedDocs.html')
+
+        elif serilizer.data[0]["is_passport_size"] == "2":
+            if bool(rej_serializer.data[0]["passport_size_photo"]):
+                dataa = getAllKYCDocByAPI(token)
+                context = {
+                           'finaldata': dataa[0]['passport_size_photo'],
+                            'driverid': driverid,
+                            'tag':"New upload document"
+                        }
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                messages.error(request, "Passport Size photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+                return render(request, 'ReviewRejectedDocs.html')   
+        else:
+            messages.error(request, "Invalid Document found Please try again...")
+            return render(request, 'ReviewRejectedDocs.html')        
+                
+    else:
+        return JsonResponse("Not found ....... ")
+
+    return render(request, 'ReviewRejectedDocs.html')
+
+
+def getAllKYCDocByAPI(token):
+       url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
+       r = requests.get(url)
+       result = json.loads(r.text)
+
+       return result

@@ -194,6 +194,7 @@
                     <th scope="col">Address</th>
                     <th scope="col">Mobile Number</th>
                     <th scope="col">Document Status</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -210,6 +211,11 @@
                     </td>
                     <td>{{i.contact_number}}</td>
                     <td style="color: #f1ae28">Reviewing</td>
+                    <td>
+                      <a >
+                        <p id="rcorners1" class="button">Process</p>
+                      </a>
+                    </td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -276,11 +282,12 @@
                     <th scope="col">Address</th>
                     <th scope="col">Mobile Number</th>
                     <th scope="col">Document Status</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- for driver request -->
-                  {% for i in data %}
+                  {% for i in reject_data %}
                     <tr>
                       <td>&nbsp;</td>
                       <td>{{i.full_name}}</td>
@@ -293,6 +300,11 @@
                       
                       <td>{{i.contact_number}}</td>
                       <td style="color: red">Non-Verified</td>
+                      <td>
+                        <a href="{% url 'reviewDriverDocument' i.request_token i.id %}">
+                          <p id="rcorners1" class="button">Review</p>
+                        </a>
+                      </td>
                     </tr>
                   {% endfor %}
                 </tbody>
