@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from testapp.views import voilaopen, remove, newtry, driverReq, testfunc, VerifyBasicInfo, VerifyAddressInfo, \
-    VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument, RejectKYCDocument, ReviewDriverDocument
+    VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument, RejectKYCDocument, ReviewDriverDocument, \
+    MoveDocRejFromInProgress
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -38,7 +39,7 @@ urlpatterns = [
                   path('VerifyAddressInfo/<str:token>/<int:driverid>/', VerifyAddressInfo, name="verifyAddressInfo"),
 
                   # verify the kyc information
-                  path('VerifyKYCDocument', VerifyKYCDocument, name="verifyKYCDocument"),
+                  path('VerifyKYCDocument/<str:doc_name>/<int:driverid>/', VerifyKYCDocument, name="verifyKYCDocument"),
 
                   # verify the vehicle  information
                   path('VerifyVehicleInfo', VerifyVehicleInfo, name="verifyVehicleInfo"),
@@ -49,6 +50,9 @@ urlpatterns = [
                   # reject the driver kyc document
                   path('RejectKYCDocument/<str:doc_name>/<int:driverid>/', RejectKYCDocument, name="rejectKYCDocument"),
 
-                #   review the driver rejected document
-                path('ReviewDriverDocument/<str:token>/<int:driverid>/', ReviewDriverDocument, name='reviewDriverDocument')
+                  #   review the driver rejected document
+                  path('ReviewDriverDocument/<str:token>/<int:driverid>/', ReviewDriverDocument,
+                       name='reviewDriverDocument'),
+                  # move document reject from progress to again review document
+                  path('MoveDocRejFromInProgress/<str:token>/', MoveDocRejFromInProgress, name="moveDocRejFromInProgress")
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

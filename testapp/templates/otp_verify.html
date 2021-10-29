@@ -168,7 +168,7 @@
                 {% endfor %}
                 {% endif %}
             </div>
-            <a href="{% url 'verifyBasicInfo' i.request_token driverid %}">
+            <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
               <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
                 Verify
               </p>
@@ -214,7 +214,7 @@
                 {% endfor %}
                 {% endif %}
             </div>
-            <a href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+            <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
               <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
                 Verify
               </p>
@@ -230,12 +230,12 @@
               <h2 style="margin-left: 20px">Aadhar Front Photo</h2>
               <img src="{{finaldata.aadhar_front_photo}}" alt="abc"
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a href="{% url 'rejectKYCDocument' 'aadhar_front_photo' driverid %}">
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
                 </a>
-                <a >
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                     Verified
                   </p>
@@ -246,12 +246,12 @@
               <h2 style="margin-left: 20px">Aadhar Back Photo</h2>
               <img src="{{finaldata.aadhar_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
                 </a> 
-                <a >
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                     Verified
                   </p>
@@ -262,12 +262,12 @@
               <h3 style="margin-left: 20px">Licence Front Photo</h3>
               <img src="{{finaldata.licence_front_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
                 </a>
-                <a >
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_front_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                     Verified
                   </p>
@@ -278,12 +278,12 @@
               <h3 style="margin-left: 25px">Licence Back Photo</h3>
               <img src="{{finaldata.licence_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a href="{% url 'rejectKYCDocument' 'licence_back_photo' driverid %}">
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
                 </a>  
-                <a >
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_back_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                     Verified
                   </p>
@@ -294,18 +294,18 @@
               <h3 style="margin-left: 20px">Passport Size Photo</h3>
               <img src="{{finaldata.passport_size_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                <a href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                     Reject
                   </p>
                 </a>
-                <a > 
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'passport_size_photo' driverid %}">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                     Verified
                   </p>
                 </a>      
             </figure>
-            <a href="{% url 'verifyKYCDocument' %}">
+            <a style="text-decoration:none" >
               <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; align-items: center;">
                 Submit
               </p>
@@ -336,7 +336,7 @@
             </div>
 
             {% endfor %}
-            <a href="{% url 'verifyVehicleInfo' %}">
+            <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' %}">
               <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
                 Verify
               </p>
@@ -393,7 +393,7 @@
               <img src="{{finaldata.vehicle_permit}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
             </figure>
-            <a href="{% url 'verifyVehicleDocument' %}">
+            <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' %}">
               <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
                 Verify and Next
               </p>
