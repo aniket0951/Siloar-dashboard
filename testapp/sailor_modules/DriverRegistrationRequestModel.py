@@ -76,6 +76,7 @@ class restaurant_registration_request(models.Model):
 
 # ------- driver verification of provided request ---------
 class driver_verification(models.Model):
+    id = models.IntegerField(primary_key = True)
     request_token = models.TextField(null=True, blank=True)
     is_basic_verified = models.IntegerField(null=True, blank=True)
     is_address_verified = models.IntegerField(null=True, blank=True)
@@ -84,13 +85,16 @@ class driver_verification(models.Model):
     is_vehicle_document_verified = models.IntegerField(null=True, blank=True)
     is_account_verified = models.IntegerField(null=True, blank=True)
     is_account_rejected = models.IntegerField(null=True, blank=True)
+   
 
     class Meta:
+        managed = True
         db_table = 'driver_verification'
 
 
 # ------- driver document verification -----------------------
 class driver_document_verification(models.Model):
+    id = models.IntegerField(primary_key = True)
     request_token = models.TextField(null=True, blank=True)
     is_aadhar_front = models.TextField(null=True, blank=True)
     is_aadhar_back = models.TextField(null=True, blank=True)
@@ -104,6 +108,8 @@ class driver_document_verification(models.Model):
     is_vehicle_rc = models.TextField(null=True, blank=True)
     is_vehicle_insurance = models.TextField(null=True, blank=True)
     is_vehicle_permit = models.TextField(null=True, blank=True)
+    # request_token = models.ManyToManyField(driver_verification) 
 
     class Meta:
+        managed = True
         db_table = 'driver_document_verification'

@@ -77,22 +77,12 @@ def testfunc(request, driverid):
     serializers = DriverRegistrationRequestSerializer(driver_info, many=True)
     token = str(serializers.data[0]["request_token"])
 
-    account_verification = driver_verification.objects.filter(request_token=token)
-    acc_serializer = DriverVerificationSerializer(account_verification, many=True)
-    data_list = []
-    for i in acc_serializer.data:
-        if i['is_basic_verified'] == 1:
-            data_list.append({'is_basic_verifyed': True})
-        if i['is_address_verified'] == 1 or i['is_address_verified'] is not None:
-            data_list.append({'is_address_verifyed': True})
-        if i['is_kyc_verified'] == 1 or i['is_kyc_verified'] is not None:
-            data_list.append({'is_kyc_verified': True})
-        if i['is_vehicle_info_verified'] == 1:
-            data_list.append({'is_vehicle_info_verified': True})
-        if i['is_vehicle_document_verified'] == 1 or i['is_vehicle_document_verified'] is not None:
-            data_list.append({'is_vehicle_document_verified': True})
-        if i['is_account_verified'] == 1 or i['is_account_verified'] is not None:
-            data_list.append({'is_account_verified': True})
+    document_state = driver_document_verification.objects.filter(request_token=token)
+    doc_serilizer = DriverDocumentVerificationSerializer(document_state, many=True)
+
+    # dcv = driver_document_verification.objects.all().prefetch_related("doc_state")
+    # ds = DriverDocumentVerificationSerializer(dcv, many=True)
+    print(doc_serilizer.data) 
 
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
 
@@ -104,7 +94,7 @@ def testfunc(request, driverid):
     context = {'data': serializers.data,
                'finaldata': finaldata,
                'driverid': driverid,
-               'verification_status': data_list
+               'doc_state': doc_serilizer.data
                }
     # print(result)
     return render(request, 'otp_verify.html', context)
@@ -184,7 +174,7 @@ def VerifyKYCDocument(request, doc_name, driverid):
                 is_aadhar_back=1)
             if update_verification_state:
                 messages.success(request, "Aadhaar Back photo verification successfully")
-                redirect('driverReq')
+                return redirect('driverReq')
             else:
                 messages.error(request, "Verification failed Please try again...")
                 return redirect('driverReq')
@@ -193,10 +183,10 @@ def VerifyKYCDocument(request, doc_name, driverid):
                 is_licence_front=1)
             if update_verification_state:
                 messages.success(request, "Licence Front photo verification successfully")
-                return redirect('driverReq')
+                return redirect('handlereq', driverid)
             else:
                 messages.error(request, "Verification failed Please try again...")
-                return redirect('driverReq')
+                return redirect('handlereq', driverid)
         elif doc_name == "licence_back_photo":
             update_verification_state = driver_document_verification.objects.filter(request_token=token).update(
                 is_licence_back=1)
@@ -212,7 +202,7 @@ def VerifyKYCDocument(request, doc_name, driverid):
             check_doc = driver_document_verification.objects.filter(request_token=token, is_aadhar_front=1,
                                                                     is_aadhar_back=1, is_licence_front=1,
                                                                     is_licence_back=1, is_passport_size=1)
-            print(check_doc)
+
             if update_verification_state:
                 messages.success(request, "Passport size photo verification successfully")
                 return redirect('driverReq')
@@ -498,4 +488,5 @@ def MoveDocRejFromInProgress(request, token):
 
         return redirect('driverReq')
     else:
-        return JsonResponse("token is missing", safe=False)
+        driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=2)
+        return redirect('driverReq')
