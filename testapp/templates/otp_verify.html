@@ -6,6 +6,8 @@
   <title>Driver Verification</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <link rel="stylesheet" href="{% static 'css/DriverReq.css' %}" />
+  <link href="path/to/lightbox.css" rel="stylesheet" />
+
   <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
@@ -15,6 +17,7 @@
 
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="path/to/lightbox.js"></script>
 
   <script>
     $(document).ready(function () {
@@ -243,11 +246,38 @@
                 {% endfor %}
                 {% endif %}
             </div>
-            <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
-              <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
-                Verify
-              </p>
-            </a>
+            <div>
+              {% if reg_process %}
+              {% for i in reg_process %}
+              {% if i.is_address_verified == 1 %}
+              <a style="text-decoration:none">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 15%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 30px; height: 30px; margin-left: 15px;"/>
+                </p>
+              </a>
+              {% elif i == None  %}
+              <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                  Verify
+                </p>
+              </a>
+              {% else %}
+              <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                  Verify
+                </p>
+              </a>
+              {% endif %}
+              {% endfor %}
+              {% else %}
+              <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                  Verify
+                </p>
+              </a>
+              {% endif %}
+            </div>
             {% endfor %}
           </div>
         </div>
@@ -256,10 +286,11 @@
         <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%" id="verified">
           <div class="table_card" id="menu3">
             {% for i in doc_state %}
-            <h1>{{i.}}</h1>
-            <figure>
+            <figure id="pop">
+              <a href="{{finaldata.aadhar_front_photo}}" data-lightbox="image-1" data-title="My caption">Image #1</a>
+
               <h2 style="margin-left: 20px">Aadhar Front Photo</h2>
-              <img src="{{finaldata.aadhar_front_photo}}" alt="abc"
+              <img src="{{finaldata.aadhar_front_photo}}" alt="abc" id="imageresource" 
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
                 {% if i.is_aadhar_front == "1" %}
                   <a style="text-decoration:none">
@@ -490,10 +521,28 @@
             </a>
           </div>
         </div>
-
       </div>
+                <!-- Creates the bootstrap modal where the image will appear -->
+                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+                      </div>
+                      <div class="modal-body">
+                        <img src="" id="imagepreview" style="width: 400px; height: 264px;" >
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
     </div>
   </section>
+
   <!-- scripts -->
   <script>
     let btn = document.querySelector("#btn");
@@ -522,7 +571,13 @@
     // on load of the page: switch to the currently selected tab
     var hash = window.location.hash;
     $('#myTab a[href="' + hash + '"]').tab('show');
-  </script>
+
+  //   $("#pop").on("click", function() {
+  //    $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
+  //    $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+  //  });
+
+  </script> 
 
 </body>
 

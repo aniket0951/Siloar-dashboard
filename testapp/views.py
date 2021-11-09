@@ -1,6 +1,5 @@
 import json
 import requests
-
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
@@ -68,6 +67,7 @@ def driverReq(request):
 
     context = {'data': serializers.data, 'inprogress_data': in_serializer.data, 'verifyed_data': serializers.data,
                'reject_data': reject_serial.data}
+    # print(context)           
 
     return render(request, 'DriverReq.html', context)
 
@@ -83,8 +83,8 @@ def testfunc(request, driverid):
     dv = driver_verification.objects.filter(request_token=token)
     ds = DriverVerificationSerializer(dv, many=True)
 
-    print(ds.data)
-    
+    # print(ds.data)
+
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
 
     r = requests.get(url)
@@ -211,9 +211,16 @@ def VerifyKYCDocument(request, doc_name, driverid):
             else:
                 messages.error(request, "Verification failed Please try again...")
                 return redirect('driverReq')
-
     else:
-        messages.error(request, "Please verify the old documents ")
+        return CreateUserVerification(request, doc_name, driverid, token)
+
+
+def CreateUserVerification(request, doc_name, driverid, token):
+    create_user = driver_verification.objects.create(request_token=token)
+    if create_user:
+        return VerifyKYCDocument(request, doc_name, driverid)
+    else:
+        messages.error(request, "Failed to verify this document please try again.")
         return redirect('driverReq')
 
 
@@ -392,11 +399,13 @@ def ReviewDriverDocument(request, token, driverid):
                     'token': token,
                     'tag': "New upload document :  Aadhaar Front Photo "
                 }
+               
                 return render(request, 'ReviewRejectedDocs.html', context)
             else:
+                
                 messages.error(request,
                                "Aadhar front photo is rejected prevoiusly . New document not upload by user to verify insted of rejected document")
-                return render(request, 'ReviewRejectedDocs.html')
+                return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
         elif serilizer.data[0]["is_aadhar_back"] == "2":
             if bool(rej_serializer.data[0]["aadhaar_back_photo"]):
@@ -410,7 +419,7 @@ def ReviewDriverDocument(request, token, driverid):
             else:
                 messages.error(request,
                                "Aadhar Back photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
-                return render(request, 'ReviewRejectedDocs.html')
+                return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
         elif serilizer.data[0]["is_licence_front"] == "2":
             if bool(rej_serializer.data[0]['licence_front_photo']):
@@ -424,7 +433,7 @@ def ReviewDriverDocument(request, token, driverid):
             else:
                 messages.error(request,
                                "Licence Front photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
-                return render(request, 'ReviewRejectedDocs.html')
+                return render(request, 'ReviewRejectedDocs.html',{'token': token})
 
         elif serilizer.data[0]["is_licence_back"] == "2":
             if bool(rej_serializer.data[0]["licence_back_photo"]):
@@ -438,7 +447,7 @@ def ReviewDriverDocument(request, token, driverid):
             else:
                 messages.error(request,
                                "Licence Back photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
-                return render(request, 'ReviewRejectedDocs.html')
+                return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
         elif serilizer.data[0]["is_passport_size"] == "2":
             if bool(rej_serializer.data[0]["passport_size_photo"]):
@@ -452,10 +461,10 @@ def ReviewDriverDocument(request, token, driverid):
             else:
                 messages.error(request,
                                "Passport Size photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
-                return render(request, 'ReviewRejectedDocs.html')
+                return render(request, 'ReviewRejectedDocs.html', {'token': token})
         else:
             messages.error(request, "Invalid Document found Please try again...")
-            return render(request, 'ReviewRejectedDocs.html')
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
     else:
         return JsonResponse("Not found ....... ")
