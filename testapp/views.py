@@ -80,10 +80,11 @@ def testfunc(request, driverid):
     document_state = driver_document_verification.objects.filter(request_token=token)
     doc_serilizer = DriverDocumentVerificationSerializer(document_state, many=True)
 
-    # dcv = driver_document_verification.objects.all().prefetch_related("doc_state")
-    # ds = DriverDocumentVerificationSerializer(dcv, many=True)
-    print(doc_serilizer.data) 
+    dv = driver_verification.objects.filter(request_token=token)
+    ds = DriverVerificationSerializer(dv, many=True)
 
+    print(ds.data)
+    
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
 
     r = requests.get(url)
@@ -94,7 +95,8 @@ def testfunc(request, driverid):
     context = {'data': serializers.data,
                'finaldata': finaldata,
                'driverid': driverid,
-               'doc_state': doc_serilizer.data
+               'doc_state': doc_serilizer.data,
+               'reg_process': ds.data
                }
     # print(result)
     return render(request, 'otp_verify.html', context)

@@ -85,7 +85,9 @@ class driver_verification(models.Model):
     is_vehicle_document_verified = models.IntegerField(null=True, blank=True)
     is_account_verified = models.IntegerField(null=True, blank=True)
     is_account_rejected = models.IntegerField(null=True, blank=True)
-   
+
+    def __str__(self):
+        return self.request_token
 
     class Meta:
         managed = True
@@ -108,7 +110,6 @@ class driver_document_verification(models.Model):
     is_vehicle_rc = models.TextField(null=True, blank=True)
     is_vehicle_insurance = models.TextField(null=True, blank=True)
     is_vehicle_permit = models.TextField(null=True, blank=True)
-    # request_token = models.ManyToManyField(driver_verification) 
 
     class Meta:
         managed = True
