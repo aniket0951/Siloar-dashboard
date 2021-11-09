@@ -54,5 +54,6 @@ urlpatterns = [
                   path('ReviewDriverDocument/<str:token>/<int:driverid>/', ReviewDriverDocument,
                        name='reviewDriverDocument'),
                   # move document reject from progress to again review document
-                  path('MoveDocRejFromInProgress/<str:token>/', MoveDocRejFromInProgress, name="moveDocRejFromInProgress")
+                  path('MoveDocRejFromInProgress/<str:token>/', MoveDocRejFromInProgress, name="moveDocRejFromInProgress"),
+                 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

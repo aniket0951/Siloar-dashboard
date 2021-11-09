@@ -285,20 +285,22 @@
         <!-- KYC Details -->
         <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%" id="verified">
           <div class="table_card" id="menu3">
-            {% for i in doc_state %}
-            <figure id="pop">
-              <a href="{{finaldata.aadhar_front_photo}}" data-lightbox="image-1" data-title="My caption">Image #1</a>
 
+            <figure >
               <h2 style="margin-left: 20px">Aadhar Front Photo</h2>
-              <img src="{{finaldata.aadhar_front_photo}}" alt="abc" id="imageresource" 
-                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              <a href="{{finaldata.aadhar_front_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.aadhar_front_photo}}" alt="abc" id="imageresource" 
+                  style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+               {% for i in doc_state %}
                 {% if i.is_aadhar_front == "1" %}
-                  <a style="text-decoration:none">
-                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
-                      Already Verified
-                      <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
-                    </p>
-                  </a>
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                   Already Verified
+                   <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
                 {% elif i.is_aadhar_front == "2" %}
                   <a style="text-decoration:none">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
@@ -319,71 +321,124 @@
                     </p>
                   </a>  
                 {% endif %}    
-            </figure>
-
-            <figure>
-              <h2 style="margin-left: 20px">Aadhar Back Photo</h2>
-              <img src="{{finaldata.aadhar_back_photo}}" alt=""
-                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                {% if i.is_aadhar_back == "1" %}
-                <a style="text-decoration:none">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
-                    Already Verified
-                    <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
-                  </p>
-                </a>
-                {% elif i.is_aadhar_back == "2" %}
-                  <a style="text-decoration:none">
-                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
-                      Rejected
-                      <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
-                      style="width: 40px; height: 40px; margin-left: 15px;"/>
-                    </p>
-                  </a>
-                {% else %}
-                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
+               {% endfor %}
+              {% else %} 
+                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_front_photo' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                       Reject
                     </p>
-                  </a> 
-                  <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_back_photo' driverid %}">
+                  </a>
+                  <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_front_photo' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                       Verified
                     </p>
                   </a>  
-                {% endif %}
+              {% endif %}
+              
+            </figure>
+
+            <figure>
+              <h2 style="margin-left: 20px">Aadhar Back Photo</h2>
+              <a href="{{finaldata.aadhar_back_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.aadhar_back_photo}}" alt=""
+                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+              {% if i.is_aadhar_back == "1" %}
+              <a style="text-decoration:none">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                </p>
+              </a>
+              {% elif i.is_aadhar_back == "2" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                    Rejected
+                    <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                    style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+              {% else %}
+                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                    Reject
+                  </p>
+                </a> 
+                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_back_photo' driverid %}">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                    Verified
+                  </p>
+                </a>  
+              {% endif %}
+              {% endfor %}
+              {% else%}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'aadhar_back_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a> 
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'aadhar_back_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a> 
+              {% endif %}
+             
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Licence Front Photo</h3>
-              <img src="{{finaldata.licence_front_photo}}" alt=""
-                style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                {% if i.is_licence_front == "1" %}
-                <a style="text-decoration:none">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
-                    Already Verified
-                    <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
-                  </p>
-                </a>
-                {% else %}
-                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
-                    Reject
-                  </p>
-                </a>
-                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_front_photo' driverid %}">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
-                    Verified
-                  </p>
-                </a>
-                {% endif %}    
+              <a href="{{finaldata.licence_front_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.licence_front_photo}}" alt=""
+                  style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+              {% if i.is_licence_front == "1" %}
+              <a style="text-decoration:none">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                </p>
+              </a>
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_front_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a>
+              {% endif %}    
+              {% endfor %}
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_front_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_front_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a>
+              {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 25px">Licence Back Photo</h3>
-              <img src="{{finaldata.licence_back_photo}}" alt=""
+              <a href="{{finaldata.licence_back_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.licence_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                {% if i.is_licence_back == "1" %}
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+              {% if i.is_licence_back == "1" %}
                 <a style="text-decoration:none">
                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
                     Already Verified
@@ -402,35 +457,63 @@
                   </p>
                 </a>
                 {% endif %}  
+              {% endfor %}
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'licence_back_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>  
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'licence_back_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a>
+              {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Passport Size Photo</h3>
-              <img src="{{finaldata.passport_size_photo}}" alt=""
+              <a href="{{finaldata.passport_size_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.passport_size_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
-                {% if i.is_passport_size == "1" %}
-                <a style="text-decoration:none">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
-                    Already Verified
-                    <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
-                  </p>
-                </a>
-                {% else %}
-                <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
-                    Reject
-                  </p>
-                </a>
-                <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'passport_size_photo' driverid %}">
-                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
-                    Verified
-                  </p>
-                </a>
-                {% endif %}      
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+              {% if i.is_passport_size == "1" %}
+              <a style="text-decoration:none">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                </p>
+              </a>
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'passport_size_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a>
+              {% endif %}   
+              {% endfor %}
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'passport_size_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyKYCDocument' 'passport_size_photo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verified
+                </p>
+              </a>
+              {% endif %}
             </figure>
             
-            {% endfor %}
-         
           </div>
         </div>
 
@@ -522,24 +605,6 @@
           </div>
         </div>
       </div>
-                <!-- Creates the bootstrap modal where the image will appear -->
-                <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">
-                          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Image preview</h4>
-                      </div>
-                      <div class="modal-body">
-                        <img src="" id="imagepreview" style="width: 400px; height: 264px;" >
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
     </div>
   </section>
 
@@ -571,11 +636,6 @@
     // on load of the page: switch to the currently selected tab
     var hash = window.location.hash;
     $('#myTab a[href="' + hash + '"]').tab('show');
-
-  //   $("#pop").on("click", function() {
-  //    $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
-  //    $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
-  //  });
 
   </script> 
 
