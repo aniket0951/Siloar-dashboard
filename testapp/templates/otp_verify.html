@@ -18,6 +18,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   <script src="path/to/lightbox.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   <script>
     $(document).ready(function () {
@@ -121,7 +122,6 @@
   <!-- card view to show all driver information -->
   <section class="parenttab">
     <div class="">
-
       <ul class="nav nav-pills option_tab" id="myTab" role="tablist">
 
         <li class="nav-item">
@@ -160,17 +160,6 @@
               <label>Date of Birth </label>
               <input type="text" value="{{i.date_of_birth}}" /><br /><br />
 
-            </div>
-            <div>
-              {% if messages %}
-              {% for message in messages %}
-              {% if message.tags == "error"%}
-                  <li{% if message.tags %} class="{{ message.tags }}" {% endif %} style="color: red; margin-left: 10px;">{{message }}</li>
-              {% else %}
-                  <li style="color: green; margin-left: 10px;">{{ message }}</li>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
             </div>
             <div>
               {% if reg_process %}
@@ -234,17 +223,6 @@
 
               <label>Pin Code</label>
               <input type="text" value="{{i.pin_code}}" /><br /><br />
-            </div>
-            <div>
-              {% if messages %}
-              {% for message in messages %}
-              {% if message.tags == "error"%}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %} style="color: red; margin-left: 10px;">{{message }}</li>
-                {% else %}
-                 <li style="color: green; margin-left: 10px;">{{ message }}</li>
-               {% endif %}
-                {% endfor %}
-                {% endif %}
             </div>
             <div>
               {% if reg_process %}
@@ -521,7 +499,7 @@
         <div class="table_parent_div col-lg-11 col-md-11 tab-pane fade in" style="padding-bottom: 3%" id="rejected">
           <div class="table_card" id="menu3">
             {% for i in data %}
-
+ 
             <div class="input-group">
               <label>Vehicle RTO Registration Number</label>
               <input type="text" value="{{i.vehicle_RTO_registration_number}}" /><br /><br />
@@ -538,13 +516,34 @@
               <label>Vehicle Type</label>
               <input type="text" value="{{i.vehicle_type}}" /><br /><br />
             </div>
-
+            <div>
+              {% if reg_process %}
+              {% for i in reg_process %}
+              {% if i.is_vehicle_info_verified == 1 %}
+              <a style="text-decoration:none">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 15%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 30px; height: 30px; margin-left: 15px;"/>
+                </p>
+              </a>
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                  Verify
+                </p>
+              </a>
+              {% endif %}
+              {% endfor %}
+              {% else %}
+              <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                  Verify
+                </p>
+              </a>
+              {% endif %}
+            </div>
             {% endfor %}
-            <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' %}">
-              <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
-                Verify
-              </p>
-            </a>
+ 
           </div>
         </div>
 
@@ -554,60 +553,378 @@
           <div class="table_card" id="menu3">
             <figure>
               <h2 style="margin-left: 20px">Vehicle Front Photo</h2>
-              {% if finaldata %}
-              <img src="{{finaldata.vehicle_front_photo}}" alt="abc"
-                style="width: 500px; height: 500px; margin-left: 25px;  border: 2px solid #000;" />
-              {% else %}
-              <h1>Image not found</h1>
+              <a href="{{finaldata.vehicle_front_photo}}" data-lightbox="image-1" data-title="My caption">
+                {% if finaldata %}
+                <img src="{{finaldata.vehicle_front_photo}}" alt="abc"
+                  style="width: 500px; height: 500px; margin-left: 25px;  border: 2px solid #000;" />
+                {% else %}
+                <h1>Image not found</h1>
+                {% endif %}
+              </a>
+              {% if doc_state %}
+               {% for i in doc_state %}
+                {% if i.is_vehicle_front == "1" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                   Already Verified
+                   <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+                {% elif i.is_vehicle_front == "2" %}
+                  <a style="text-decoration:none">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                      Rejected
+                      <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                      style="width: 40px; height: 40px; margin-left: 15px;"/>
+                    </p>
+                  </a>
+                {% else %}
+                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_front' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                      Reject
+                    </p>
+                  </a>
+                  <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_front' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                      Verified
+                    </p>
+                  </a>  
+                {% endif %}    
+               {% endfor %}
+              {% else %} 
+                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_front' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                      Reject
+                    </p>
+                  </a>
+                  <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_front' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                      Verified
+                    </p>
+                  </a>  
               {% endif %}
             </figure>
 
             <figure>
               <h2 style="margin-left: 20px">Vehicle Back Photo</h2>
-              <img src="{{finaldata.vehicle_back_photo}}" alt=""
+              <a href="{{finaldata.vehicle_back_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_back_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+               {% for i in doc_state %}
+                {% if i.is_vehicle_back == "1" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                   Already Verified
+                   <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+                {% elif i.is_vehicle_back == "2" %}
+                  <a style="text-decoration:none">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                      Rejected
+                      <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                      style="width: 40px; height: 40px; margin-left: 15px;"/>
+                    </p>
+                  </a>
+                {% else %}
+                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_back' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                      Reject
+                    </p>
+                  </a>
+                  <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_back' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                      Verified
+                    </p>
+                  </a>  
+                {% endif %}    
+               {% endfor %}
+              {% else %} 
+                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_back' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                      Reject
+                    </p>
+                  </a>
+                  <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_back' driverid %}">
+                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                      Verified
+                    </p>
+                  </a>  
+              {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Vehicle Left Photo</h3>
-              <img src="{{finaldata.vehicle_left_photo}}" alt=""
+              <a href="{{finaldata.vehicle_left_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_left_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+               {% if i.is_vehicle_left == "1" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+               {% elif i.is_vehicle_left == "2" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                     Rejected
+                     <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                     style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+               {% else %}
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_left' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_left' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+               {% endif %}    
+              {% endfor %}
+             {% else %} 
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_left' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_left' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+             {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 25px">Vehicle Right Photo</h3>
-              <img src="{{finaldata.vehicle_right_photo}}" alt=""
+              <a href="{{finaldata.vehicle_right_photo}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_right_photo}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+               {% if i.is_vehicle_right == "1" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+               {% elif i.is_vehicle_right == "2" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                     Rejected
+                     <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                     style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+               {% else %}
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_right' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_right' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+               {% endif %}    
+              {% endfor %}
+             {% else %} 
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_right' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_right' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+             {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Vehicle RC</h3>
-              <img src="{{finaldata.vehicle_rc}}" alt=""
+              <a href="{{finaldata.vehicle_rc}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_rc}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+               {% if i.is_vehicle_rc == "1" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+               {% elif i.is_vehicle_rc == "2" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                     Rejected
+                     <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                     style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+               {% else %}
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_rc' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_rc' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+               {% endif %}    
+              {% endfor %}
+             {% else %} 
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_rc' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_rc' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+             {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Vehicle Insurance</h3>
-              <img src="{{finaldata.vehicle_insurance}}" alt=""
+              <a href="{{finaldata.vehicle_insurance}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_insurance}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+               {% if i.is_vehicle_insurance == "1" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+               {% elif i.is_vehicle_insurance == "2" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                     Rejected
+                     <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                     style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+               {% else %}
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_insurance' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_insurance' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+               {% endif %}    
+              {% endfor %}
+             {% else %} 
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_insurance' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_insurance' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+             {% endif %}
             </figure>
 
             <figure>
               <h3 style="margin-left: 20px">Vehicle Permit</h3>
-              <img src="{{finaldata.vehicle_permit}}" alt=""
+              <a href="{{finaldata.vehicle_permit}}" data-lightbox="image-1" data-title="My caption">
+                <img src="{{finaldata.vehicle_permit}}" alt=""
                 style="width: 500px; height: 500px; margin-left: 25px; border: 2px solid #000;" />
+              </a>
+              {% if doc_state %}
+              {% for i in doc_state %}
+               {% if i.is_vehicle_permit == "1" %}
+                <a style="text-decoration:none">
+                  <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                  Already Verified
+                  <img src="https://img.icons8.com/fluency/48/000000/verified-account.png" style="width: 40px; height: 40px; margin-left: 15px;"/>
+                  </p>
+                </a>
+               {% elif i.is_vehicle_permit == "2" %}
+                 <a style="text-decoration:none">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: #7135A1; width: 45%;">
+                     Rejected
+                     <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-rejected-approved-and-rejected-bearicons-outline-color-bearicons-3.png"
+                     style="width: 40px; height: 40px; margin-left: 15px;"/>
+                   </p>
+                 </a>
+               {% else %}
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_permit' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_permit' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+               {% endif %}    
+              {% endfor %}
+             {% else %} 
+                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_permit' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                     Reject
+                   </p>
+                 </a>
+                 <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' 'vehicle_permit' driverid %}">
+                   <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                     Verified
+                   </p>
+                 </a>  
+             {% endif %}
             </figure>
-            <a style="text-decoration:none" href="{% url 'verifyVehicleDocument' %}">
-              <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
-                Verify and Next
-              </p>
-            </a>
           </div>
         </div>
       </div>
     </div>
   </section>
-
+  <div>
+    {% if messages %} 
+    {% for message in messages %} 
+    {% if message.tags %}
+      <script>
+        swal({
+          title: "Voila Silor",
+          text: "{{ message }}",
+          icon: "success",
+          button: "Done",
+        });
+      </script>
+    {% endif %} 
+    {% endfor %} 
+    {% endif %}
+  </div>
   <!-- scripts -->
   <script>
     let btn = document.querySelector("#btn");

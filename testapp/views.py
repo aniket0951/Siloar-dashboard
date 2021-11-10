@@ -1,5 +1,6 @@
 import json
 import requests
+import numpy
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
@@ -58,14 +59,14 @@ def driverReq(request):
     inprogress_data = driver_registartion_request.objects.filter(account_verification_status=2)
     in_serializer = DriverRegistrationRequestSerializer(inprogress_data, many=True)
 
-    # verifyed_data = driver_registartion_request.objects.filter(account_verification_status=1)
-    # verify_serializer = DriverRegistrationRequestSerializer(verifyed_data, many=True)
+    verifyed_data = driver_registartion_request.objects.filter(account_verification_status=1)
+    verify_serializer = DriverRegistrationRequestSerializer(verifyed_data, many=True)
 
     # ---- get rejected request or document verification failed ---
     rejected_data = driver_registartion_request.objects.filter(account_verification_status=3)
     reject_serial = DriverRegistrationRequestSerializer(rejected_data, many=True)
 
-    context = {'data': serializers.data, 'inprogress_data': in_serializer.data, 'verifyed_data': serializers.data,
+    context = {'data': serializers.data, 'inprogress_data': in_serializer.data, 'verifyed_data': verify_serializer.data,
                'reject_data': reject_serial.data}
     # print(context)           
 
@@ -86,8 +87,8 @@ def testfunc(request, driverid):
 
     dv = driver_verification.objects.filter(request_token=token)
     ds = DriverVerificationSerializer(dv, many=True)
-   
-    # print(ds.data)
+
+    # print("This is ds data",ds.data)
 
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
 
@@ -174,25 +175,25 @@ def VerifyKYCDocument(request, doc_name, driverid):
         if driver_document_verification.objects.filter(request_token=token).exists():
             if doc_name == "aadhar_front_photo":
                 update_verification_state = driver_document_verification.objects.filter(request_token=token).update(
-                is_aadhar_front=1)
+                    is_aadhar_front=1)
                 if update_verification_state:
                     messages.success(request, "Aadhaar Front photo verification successfully")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
                 else:
                     messages.error(request, "Verification failed Please try again...")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
             elif doc_name == "aadhar_back_photo":
                 update_verification_state = driver_document_verification.objects.filter(request_token=token).update(
-                is_aadhar_back=1)
+                    is_aadhar_back=1)
                 if update_verification_state:
                     messages.success(request, "Aadhaar Back photo verification successfully")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
                 else:
                     messages.error(request, "Verification failed Please try again...")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
             elif doc_name == "licence_front_photo":
                 update_verification_state = driver_document_verification.objects.filter(request_token=token).update(
-                is_licence_front=1)
+                    is_licence_front=1)
                 if update_verification_state:
                     messages.success(request, "Licence Front photo verification successfully")
                     return redirect('handlereq', driverid)
@@ -204,25 +205,43 @@ def VerifyKYCDocument(request, doc_name, driverid):
                     is_licence_back=1)
                 if update_verification_state:
                     messages.success(request, "Licence Back photo verification successfully")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
                 else:
                     messages.error(request, "Verification failed Please try again...")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
             elif doc_name == "passport_size_photo":
                 update_verification_state = driver_document_verification.objects.filter(request_token=token).update(
                     is_passport_size=1)
                 check_doc = driver_document_verification.objects.filter(request_token=token, is_aadhar_front=1,
                                                                         is_aadhar_back=1, is_licence_front=1,
                                                                         is_licence_back=1, is_passport_size=1)
+                
+                # read verification process to update kyc verification
+                is_verification = driver_document_verification.objects.filter(request_token=token)
+                is_ver_serilizer = DriverDocumentVerificationSerializer(is_verification, many=True)
 
+                data_list = []
+                for i in is_ver_serilizer.data:
+                    data_list.append(i['is_aadhar_front'])
+                    data_list.append(i['is_aadhar_back'])
+                    data_list.append(i['is_licence_front'])
+                    data_list.append(i['is_licence_back'])
+                    data_list.append(i['is_passport_size'])
+
+                
+                unique_data = (numpy.unique(data_list))
+            
+                if '2' in unique_data:print("Two is present bhai")
+                else:update_verification_state = driver_verification.objects.filter(request_token=token).update(is_kyc_verified=1)
+  
                 if update_verification_state:
                     messages.success(request, "Passport size photo verification successfully")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
                 else:
                     messages.error(request, "Verification failed Please try again...")
-                    return redirect('driverReq')
+                    return redirect('handlereq', driverid)
         else:
-            return CreateUserDocumentVeri(request, doc_name, driverid, token )
+            return CreateUserDocumentVeri(request, doc_name, driverid, token)
     else:
         return CreateUserVerification(request, doc_name, driverid, token)
 
@@ -235,22 +254,62 @@ def CreateUserVerification(request, doc_name, driverid, token):
         messages.error(request, "Failed to verify this document please try again.")
         return redirect('driverReq')
 
+
 def CreateUserDocumentVeri(request, doc_name, driverid, token):
     create_doc_verification = driver_document_verification.objects.create(request_token=token)
     if create_doc_verification:
         return VerifyKYCDocument(request, doc_name, driverid)
     else:
         messages.error(request, "Failed to verify this document please try again.")
-        return redirect('driverReq')     
+        return redirect('driverReq')
 
-# ----- verify the driver vehicle information ---
-def VerifyVehicleInfo(request):
-    return HttpResponse("This is Vehicle Info Verification")
+    # ----- verify the driver vehicle information ---
+
+
+def VerifyVehicleInfo(request, token, driverid):
+    if driver_verification.objects.filter(request_token=token).exists():
+        update_vehicle_info = driver_verification.objects.filter(request_token=token).update(is_vehicle_info_verified=1)
+
+        if update_vehicle_info:
+            messages.success(request, "Vehicle Information Verified Successfully...")
+            return redirect('handlereq', driverid)
+        else:
+            messages.error(request, "Failed to Verify Vehicle Information, Please try again...")
+            return redirect('handlereq', driverid)
+    else:
+
+        result = driver_verification.objects.create(request_token=token, is_vehicle_info_verified=1)
+
+        if result:
+            messages.success(request, "Vehicle Information Verified Successfully...")
+            return redirect('handlereq', driverid)
+        else:
+            messages.error(request, "Failed to Verify Vehicle Information, Please try again...")
+            return redirect('handlereq', driverid)    
+
 
 
 # ----- verify the driver vehicle Document --
-def VerifyVehicleDocument(request):
-    return HttpResponse("This is Vehicle Document Verification")
+def VerifyVehicleDocument(request,doc_name, driverid):
+    # get token by driver id from request
+    data = driver_registartion_request.objects.filter(id=driverid)
+    serilizer = DriverRegistrationRequestSerializer(data, many=True)
+    token = serilizer.data[0]["request_token"]
+    
+    if driver_document_verification.objects.filter(request_token=token).exists():
+        if doc_name == "vehicle_front":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_front=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Front Image Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_back":        
+        else:
+            return JsonResponse("This is not vehicle front", safe=False)            
+    else:
+        return JsonResponse("Need to create user", safe=False)    
 
 
 # --- reject kyc document ---
@@ -418,10 +477,10 @@ def ReviewDriverDocument(request, token, driverid):
                     'token': token,
                     'tag': "New upload document :  Aadhaar Front Photo "
                 }
-               
+
                 return render(request, 'ReviewRejectedDocs.html', context)
             else:
-                
+
                 messages.error(request,
                                "Aadhar front photo is rejected prevoiusly . New document not upload by user to verify insted of rejected document")
                 return render(request, 'ReviewRejectedDocs.html', {'token': token})
@@ -452,7 +511,7 @@ def ReviewDriverDocument(request, token, driverid):
             else:
                 messages.error(request,
                                "Licence Front photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
-                return render(request, 'ReviewRejectedDocs.html',{'token': token})
+                return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
         elif serilizer.data[0]["is_licence_back"] == "2":
             if bool(rej_serializer.data[0]["licence_back_photo"]):
@@ -520,4 +579,3 @@ def MoveDocRejFromInProgress(request, token):
     else:
         driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=2)
         return redirect('driverReq')
-

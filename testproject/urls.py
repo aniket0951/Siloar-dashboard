@@ -42,10 +42,10 @@ urlpatterns = [
                   path('VerifyKYCDocument/<str:doc_name>/<int:driverid>/', VerifyKYCDocument, name="verifyKYCDocument"),
 
                   # verify the vehicle  information
-                  path('VerifyVehicleInfo', VerifyVehicleInfo, name="verifyVehicleInfo"),
+                  path('VerifyVehicleInfo/<str:token>/<int:driverid>/', VerifyVehicleInfo, name="verifyVehicleInfo"),
 
                   # verify the vehicle  information
-                  path('VerifyVehicleDocument', VerifyVehicleDocument, name="verifyVehicleDocument"),
+                  path('VerifyVehicleDocument/<str:doc_name>/<int:driverid>/', VerifyVehicleDocument, name="verifyVehicleDocument"),
 
                   # reject the driver kyc document
                   path('RejectKYCDocument/<str:doc_name>/<int:driverid>/', RejectKYCDocument, name="rejectKYCDocument"),
