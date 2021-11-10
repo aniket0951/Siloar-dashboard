@@ -579,7 +579,7 @@
                     </p>
                   </a>
                 {% else %}
-                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_front' driverid %}">
+                  <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_front' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                       Reject
                     </p>
@@ -592,7 +592,7 @@
                 {% endif %}    
                {% endfor %}
               {% else %} 
-                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_front' driverid %}">
+                  <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_front' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                       Reject
                     </p>
@@ -629,7 +629,7 @@
                     </p>
                   </a>
                 {% else %}
-                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_back' driverid %}">
+                  <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_back' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                       Reject
                     </p>
@@ -642,7 +642,7 @@
                 {% endif %}    
                {% endfor %}
               {% else %} 
-                  <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_back' driverid %}">
+                  <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_back' driverid %}">
                     <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                       Reject
                     </p>
@@ -679,7 +679,7 @@
                    </p>
                  </a>
                {% else %}
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_left' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_left' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -692,7 +692,7 @@
                {% endif %}    
               {% endfor %}
              {% else %} 
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_left' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_left' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -729,7 +729,7 @@
                    </p>
                  </a>
                {% else %}
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_right' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_right' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -742,7 +742,7 @@
                {% endif %}    
               {% endfor %}
              {% else %} 
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_right' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_right' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -779,7 +779,7 @@
                    </p>
                  </a>
                {% else %}
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_rc' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_rc' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -792,7 +792,7 @@
                {% endif %}    
               {% endfor %}
              {% else %} 
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_rc' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_rc' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -829,7 +829,7 @@
                    </p>
                  </a>
                {% else %}
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_insurance' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_insurance' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -842,7 +842,7 @@
                {% endif %}    
               {% endfor %}
              {% else %} 
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_insurance' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_insurance' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -879,7 +879,7 @@
                    </p>
                  </a>
                {% else %}
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_permit' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_permit' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>
@@ -892,7 +892,7 @@
                {% endif %}    
               {% endfor %}
              {% else %} 
-                 <a style="text-decoration:none" href="{% url 'rejectKYCDocument' 'vehicle_permit' driverid %}">
+                 <a style="text-decoration:none" href="{% url 'rejectVehicleDocuments' 'vehicle_permit' driverid %}">
                    <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
                      Reject
                    </p>

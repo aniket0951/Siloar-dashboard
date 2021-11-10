@@ -305,7 +305,54 @@ def VerifyVehicleDocument(request,doc_name, driverid):
             else:
                 messages.error(request, "Failed to verify this document")
                 return redirect('handlereq', driverid)
-        elif doc_name == "vehicle_back":        
+        elif doc_name == "vehicle_back":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_back=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Back Image Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_left":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_left=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Left Image Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_right":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_right=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Right Image Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_rc":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_rc=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle RC Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_insurance":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_insurance=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Insurance Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_permit":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_permit=1)
+            if up_verify_state:
+                messages.success(request,"Vehicle Permit Verification Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to verify this document")
+                return redirect('handlereq', driverid)
         else:
             return JsonResponse("This is not vehicle front", safe=False)            
     else:
@@ -328,6 +375,97 @@ def RejectKYCDocument(request, doc_name, driverid):
     else:
         return createRejectionDocument(request, token, doc_name)
 
+# ---- reject vehicle documents ---
+def RejectVehicleDocuments(request, doc_name, driverid):
+    req_data = driver_registartion_request.objects.filter(id=driverid)
+    serilizer = DriverRegistrationRequestSerializer(req_data, many=True)
+    
+    token = serilizer.data[0]["request_token"]
+
+    if driver_document_verification.objects.filter(request_token=token).exists():
+        if doc_name == "vehicle_front":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_front=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_front_photo=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_back":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_back=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_back_photo=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_left":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_left=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_left_photo=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_right":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_right=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_right_photo=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_rc":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_rc=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_rc=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_insurance":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_insurance=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_insurance=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        elif doc_name == "vehicle_permit":
+            up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_permit=2)
+            up_doc_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=2)
+            if up_verify_state and up_doc_state:
+                driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=3,
+                                                                                   vehicle_permit=None, status=4)
+                messages.success(request,"Document Rejected Successfully...")
+                return redirect('handlereq', driverid)
+            else:
+                messages.error(request, "Failed to Reject this document")
+                return redirect('handlereq', driverid)
+        else:
+            messages.error(request, "Failed to reject this document, please try again ...")
+            return redirect('handlereq', driverid)
+    else:
+        messages.error(request, "Failed to reject this document, please try again ...")
+        return redirect('handlereq', driverid)
 
 def updateRejectDocument(request, token, doc_name):
     if doc_name == "aadhar_front_photo":
@@ -541,12 +679,15 @@ def ReviewDriverDocument(request, token, driverid):
                                "Passport Size photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
                 return render(request, 'ReviewRejectedDocs.html', {'token': token})
         else:
+            return ReviewVehicleDocument(request, token, driverid)
             messages.error(request, "Invalid Document found Please try again...")
             return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
     else:
         return JsonResponse("Not found ....... ")
 
+def ReviewVehicleDocument(request, token, driverid):
+    return JsonResponse("Review called", safe=False)
 
 def getAllKYCDocByAPI(token):
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
