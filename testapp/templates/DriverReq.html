@@ -12,6 +12,7 @@
       href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link href="path/to/lightbox.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -22,6 +23,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="path/to/lightbox.js"></script>
   </head>
   <body>
     <!-- side-bar -->
@@ -52,7 +54,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a href="{% url 'showRestaurantReq' %}">
             <i class="bx bx-restaurant"></i>
             <span class="links_name">Restaurant Request</span>
           </a>
@@ -112,20 +114,19 @@
     <!-- list and graph card -->
     <section class="parenttab">
       <div class="">
-        <ul class="nav nav-pills option_tab" role="tablist">
+        <ul class="nav nav-pills option_tab" role="tablist" id="myTab">
           <li class="nav-item">
-            <a class="nav-link active" data-toggle="pill" href="#new">New</a>
+            <a class="nav-link active" data-toggle="tab" href="#new">New</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#progress"
-              >Inprogress</a
-            >
+            <a class="nav-link" data-toggle="tab" href="#progress"
+              >Inprogress</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#verified">Verified</a>
+            <a class="nav-link" data-toggle="tab" href="#verified">Verified</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="pill" href="#rejected">Rejected</a>
+            <a class="nav-link" data-toggle="tab" href="#rejected">Rejected</a>
           </li>
         </ul>
 
@@ -166,7 +167,7 @@
                     <td class="table_body_text">{{i.contact_number}}</td>
                     <td style="color: red">Not Verified</td>
                     <td class="table_body_text">
-                      <a href="{% url 'handlereq' i.id %}">
+                      <a href="{% url 'handlereq' i.id %}" style="text-decoration:none">
                         <p id="rcorners1" class="button">Handle</p>
                       </a>
                     </td>
@@ -213,7 +214,7 @@
                     <td>{{i.contact_number}}</td>
                     <td style="color: #f1ae28">Reviewing</td>
                     <td>
-                      <a href="{% url 'handlereq' i.id %}">
+                      <a href="{% url 'handlereq' i.id %}" style="text-decoration:none">
                         <p id="rcorners1" class="button">Process</p>
                       </a>
                     </td>
@@ -341,6 +342,22 @@
       searchBtn.onclick = function () {
         sidebar.classList.toggle("active");
       };
+
+      $('#myTab a').click(function (e) {
+      e.preventDefault();
+      $(this).tab('show');
+     });
+
+    // store the currently selected tab in the hash value
+    $("ul.nav-tabs > li > a").on("shown.bs.tab", function (e) {
+      var id = $(e.target).attr("href").substr(1);
+      window.location.hash = id;
+    });
+
+    // on load of the page: switch to the currently selected tab
+    var hash = window.location.hash;
+    $('#myTab a[href="' + hash + '"]').tab('show');
+
     </script>
   </body>
 </html>

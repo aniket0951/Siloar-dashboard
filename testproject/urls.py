@@ -14,15 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from testapp.views import voilaopen, remove, newtry, driverReq, testfunc, VerifyBasicInfo, VerifyAddressInfo, \
     VerifyKYCDocument, VerifyVehicleInfo, VerifyVehicleDocument, RejectKYCDocument, ReviewDriverDocument, \
-    MoveDocRejFromInProgress, RejectVehicleDocuments
+    MoveDocRejFromInProgress, RejectVehicleDocuments, RejectBasicInfo, RejectAddressInfo, RejectVehicleInfo
 from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
+                  # include the url of restaurant app
+                  path('api/', include('restaurant.res_urls')),
                   path('voilaopen', voilaopen, name='index'),
                   path('remove', remove, name='remove'),
                   path('newtry', newtry, name="newtry"),
@@ -45,7 +47,8 @@ urlpatterns = [
                   path('VerifyVehicleInfo/<str:token>/<int:driverid>/', VerifyVehicleInfo, name="verifyVehicleInfo"),
 
                   # verify the vehicle  information
-                  path('VerifyVehicleDocument/<str:doc_name>/<int:driverid>/', VerifyVehicleDocument, name="verifyVehicleDocument"),
+                  path('VerifyVehicleDocument/<str:doc_name>/<int:driverid>/', VerifyVehicleDocument,
+                       name="verifyVehicleDocument"),
 
                   # reject the driver kyc document
                   path('RejectKYCDocument/<str:doc_name>/<int:driverid>/', RejectKYCDocument, name="rejectKYCDocument"),
@@ -54,9 +57,19 @@ urlpatterns = [
                   path('ReviewDriverDocument/<str:token>/<int:driverid>/', ReviewDriverDocument,
                        name='reviewDriverDocument'),
                   # move document reject from progress to again review document
-                  path('MoveDocRejFromInProgress/<str:token>/', MoveDocRejFromInProgress, name="moveDocRejFromInProgress"),
+                  path('MoveDocRejFromInProgress/<str:token>/', MoveDocRejFromInProgress,
+                       name="moveDocRejFromInProgress"),
 
                   # reject the vehicle documents 
-                  path('RejectVehicleDocuments/<str:doc_name>/<int:driverid>/', RejectVehicleDocuments, name="rejectVehicleDocuments")
-                 
+                  path('RejectVehicleDocuments/<str:doc_name>/<int:driverid>/', RejectVehicleDocuments,
+                       name="rejectVehicleDocuments"),
+
+                  # reject basic information
+                  path('RejectBasicInfo/<int:driverid>/', RejectBasicInfo, name="rejectBasicInfo"),
+
+                  # reject address information
+                  path('RejectAddressInfo/<int:driverid>/', RejectAddressInfo, name="rejectAddressInfo"),
+
+                  # reject vehicle information 
+                  path('RejectVehicleInfo/<int:driverid>/', RejectVehicleInfo, name="rejectVehicleInfo"),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

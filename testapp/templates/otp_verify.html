@@ -62,7 +62,7 @@
       </li>
 
       <li>
-        <a href="#">
+        <a href="{% url 'showRestaurantReq' %}">
           <i class="bx bx-restaurant"></i>
           <span class="links_name">Restaurant Request</span>
         </a>
@@ -172,25 +172,40 @@
                 </p>
               </a>
               {% elif i == None  %}
+              <a style="text-decoration:none" href="{% url 'rejectBasicInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
               <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
               {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectBasicInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
               <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
               {% endif %}
               {% endfor %}
               {% else %}
-              <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
-                  Verify
+              <a style="text-decoration:none" href="{% url 'rejectBasicInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
                 </p>
               </a>
+              <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
+                  Verify
+                </p>
+              </a> 
               {% endif %}
             </div>
   
@@ -235,22 +250,37 @@
                 </p>
               </a>
               {% elif i == None  %}
-              <a style="text-decoration:none" href="{% url 'verifyBasicInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+              <a style="text-decoration:none" href="{% url 'rejectAddressInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
               {% else %}
-              <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+              <a style="text-decoration:none" href="{% url 'rejectAddressInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
               {% endif %}
               {% endfor %}
               {% else %}
-              <a style="text-decoration:none;" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+              <a style="text-decoration:none" href="{% url 'rejectBasicInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
+              <a style="text-decoration:none" href="{% url 'verifyAddressInfo' i.request_token driverid %}">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
@@ -527,16 +557,26 @@
                 </p>
               </a>
               {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectVehicleInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
               <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>
               {% endif %}
               {% endfor %}
               {% else %}
+              <a style="text-decoration:none" href="{% url 'rejectVehicleInfo' driverid %}">
+                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px; margin-top: 10px; background-color: red;">
+                  Reject
+                </p>
+              </a>
               <a style="text-decoration:none" href="{% url 'verifyVehicleInfo' i.request_token driverid %}">
-                <p id="rcorners1" class="button" style="margin-left: 25px; font-weight: 10px">
+                <p id="rcorners1" class="button" style="margin-right: 1050px; font-weight: 10px; margin-top: -45px; float: right; background-color: green;">
                   Verify
                 </p>
               </a>

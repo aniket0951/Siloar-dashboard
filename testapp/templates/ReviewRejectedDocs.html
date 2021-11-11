@@ -53,7 +53,7 @@
         </li>
 
         <li>
-          <a href="#">
+          <a href="{% url 'showRestaurantReq' %}">
             <i class="bx bx-restaurant"></i>
             <span class="links_name">Restaurant Request</span>
           </a>
@@ -148,7 +148,10 @@
               {% endfor %} 
               {% endif %}
             </div>
-            <h3 style="color: green; margin-left: 10px">{{ tag }}</h3>
+            <!-- if image is rejected  -->
+            {% if finaldata %}
+            <div>
+              <h3 style="color: green; margin-left: 10px">{{ tag }}</h3>
             <img
               src="{{ finaldata }}"
               alt=""
@@ -157,7 +160,89 @@
             <a style="margin-left: 10px; margin-top: 10px" href="{% url 'moveDocRejFromInProgress' token %}">
                 <p id="rcorners1" class="button" style="margin-left: 15px; margin-top: 10px;">Accept</p>
             </a>
+            {% endif %}
+
+            <!-- if address info rejected -->
+            {% if address_data %}
+            {% for i in address_data %}
+            <div class="input-group">
+              <label>House Number</label>
+              <input type="text" value="{{i.house_number}}" /><br /><br />
+
+              <label>Building Name</label>
+              <input type="text" value="{{i.building_name}}" /><br /><br />
+
+              <label>Street Name</label>
+              <input type="text" value="{{i.street_name}}" /><br /><br />
+
+              <label>Landmark</label>
+              <input type="text" value="{{i.landmark}}" /><br /><br />
+
+              <label>state</label>
+              <input type="text" value="{{i.state}}" /><br /><br />
+
+              <label>District</label>
+              <input type="text" value="{{i.district}}" /><br /><br />
+
+              <label>Pin Code</label>
+              <input type="text" value="{{i.pin_code}}" /><br /><br />
+            </div>
+            <a style="margin-left: 10px; margin-top: 10px" href="{% url 'moveDocRejFromInProgress' token %}">
+              <p id="rcorners1" class="button" style="margin-left: 15px; margin-top: 10px;">Accept</p>
+            </a>
+            {% endfor %}
+            {% endif %}
+
+            <!-- if basic info rejected -->
+            {% if basic_data %}
+            {% for i in basic_data %}
+            <div class="input-group">
+              <label>Full Name</label>
+              <input type="text" value="{{i.full_name}}" /><br /><br />
+
+              <label>Email</label>
+              <input type="text" value="{{i.email}}" /><br /><br />
+
+              <label>Contact Number</label>
+              <input type="text" value="{{i.contact_number}}" /><br /><br />
+
+              <label>Date of Birth </label>
+              <input type="text" value="{{i.date_of_birth}}" /><br /><br />
+              
+            </div>
+            <a style="margin-left: 10px; margin-top: 10px" href="{% url 'moveDocRejFromInProgress' token %}">
+              <p id="rcorners1" class="button" style="margin-left: 15px; margin-top: 10px;">Accept</p>
+            </a>
+            {% endfor %}
+            {% endif %}
+
+            <!-- if vehicle info rejected  -->
+            {% if vehicle_info_data %}
+            {% for i in vehicle_info_data %}
+            <div class="input-group">
+              <label>Vehicle RTO Registration Number</label>
+              <input type="text" value="{{i.vehicle_RTO_registration_number}}" /><br /><br />
+
+              <label>Vehicle RC Number</label>
+              <input type="text" value="{{i.vehicle_rc_number}}" /><br /><br />
+
+              <label>Vehicle Color</label>
+              <input type="text" value="{{i.vehicle_colour}}" /><br /><br />
+
+              <label>Vehicle Make Year</label>
+              <input type="text" value="{{i.vehicle_make_year}}" /><br /><br />
+
+              <label>Vehicle Type</label>
+              <input type="text" value="{{i.vehicle_type}}" /><br /><br />
+            </div>
+            <a style="margin-left: 10px; margin-top: 10px" href="{% url 'moveDocRejFromInProgress' token %}">
+              <p id="rcorners1" class="button" style="margin-left: 15px; margin-top: 10px;">Accept</p>
+            </a>
+            {% endfor %}
+            {% endif %}
+            </div>
           </div>
+
         </div>
       </div>
     </section>

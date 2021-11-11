@@ -7,9 +7,9 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
 from testapp.sailor_modules.DriverRegistrationRequestModel import driver_registartion_request, \
-    restaurant_registration_request, driver_verification, driver_document_verification
+     driver_verification, driver_document_verification
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
-    RestaurantRegistrationRequestSerializer, DriverDocumentVerificationSerializer, DriverVerificationSerializer
+    DriverDocumentVerificationSerializer, DriverVerificationSerializer
 from rest_framework.decorators import api_view
 
 
@@ -368,6 +368,21 @@ def VerifyVehicleDocument(request,doc_name, driverid):
             if '2' in unique_data:print("Two is present bhai")
             else:update_verification_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=1)
 
+            check_v_state = driver_verification.objects.filter(request_token=token)
+            check_serilizer = DriverVerificationSerializer(check_v_state, many=True)
+
+            n_data_list = []
+            for i in check_serilizer.data:
+                n_data_list.append(i["is_basic_verified"])
+                n_data_list.append(i["is_address_verified"])
+                n_data_list.append(i["is_kyc_verified"])
+                n_data_list.append(i["is_vehicle_info_verified"])
+                n_data_list.append(i["is_vehicle_document_verified"])
+
+            
+            if 2 in n_data_list:print(n_data_list)
+            else:driver_registartion_request.objects.filter(request_token=token).update(account_verification_status=1)
+            
 
             if up_verify_state:
                 messages.success(request,"Vehicle Permit Verification Successfully...")
@@ -488,6 +503,81 @@ def RejectVehicleDocuments(request, doc_name, driverid):
     else:
         messages.error(request, "Failed to reject this document, please try again ...")
         return redirect('handlereq', driverid)
+
+# ----- reject basic info ---
+def RejectBasicInfo(request, driverid):
+    req_data = driver_registartion_request.objects.filter(id=driverid)
+    serilizer = DriverRegistrationRequestSerializer(req_data, many=True)
+
+    token = serilizer.data[0]["request_token"]
+
+    if driver_verification.objects.filter(request_token=token).exists():
+        up_verify_state = driver_verification.objects.filter(request_token=token).update(is_basic_verified=2)
+        # remove old basic info
+        rm_old_info = driver_registartion_request.objects.filter(request_token=token).update(full_name=None,email=None,
+                                                                                             contact_number=None,date_of_birth=None, 
+                                                                                             status=1, account_verification_status=3)
+
+        if up_verify_state and rm_old_info:
+            messages.success(request, "Document Successfully Rejected")
+            return redirect('handlereq', driverid)
+        else:
+            messages.error(request, "Failed to reject the docment please try again..")
+            return redirect('handlereq', driverid)    
+    else:
+        result = driver_verification.objects.create(request_token=token, is_basic_verified=2)
+        rm_old_info = driver_registartion_request.objects.filter(request_token=token).update(full_name=None,email=None,
+                                                                                             contact_number=None,date_of_birth=None, 
+                                                                                             status=1, account_verification_status=3)
+        if result:
+            messages.success(request, "Document Successfully Rejected")
+            return redirect('handlereq', driverid)    
+        else:
+            messages.error(request, "Failed to reject the docment please try again..")
+            return redirect('handlereq', driverid)
+
+# ---- reject address info ----
+def RejectAddressInfo(request, driverid):
+    req_data = driver_registartion_request.objects.filter(id=driverid)
+    req_serilizer = DriverRegistrationRequestSerializer(req_data, many=True)
+
+    token = req_serilizer.data[0]["request_token"]
+
+    up_verify_state = driver_verification.objects.filter(request_token=token).update(is_address_verified=2)
+
+    # remove all address info
+    rm_add_info = driver_registartion_request.objects.filter(request_token=token).update(house_number=None, building_name=None,
+                                                                                         street_name=None, landmark=None,
+                                                                                         state=None, district=None, pin_code=None,
+                                                                                         status=2, account_verification_status=3
+                                                                                         )
+
+    if up_verify_state and rm_add_info:
+        messages.success(request,"Address Information Rejected Successfully..")
+        return redirect('handlereq', driverid)
+    else:
+        messages.error(request, "Failed To Reject Address Information..")
+        return redirect('handlereq', driverid)    
+
+# ---- reject vehicle info ---
+def RejectVehicleInfo(request, driverid):
+    req_data = driver_registartion_request.objects.filter(id=driverid)
+    req_serilizer = DriverRegistrationRequestSerializer(req_data, many=True)
+
+    token = req_serilizer.data[0]["request_token"]
+
+    up_verify_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_info_verified=2)
+
+    rm_vehicle_info = driver_registartion_request.objects.filter(request_token=token).update(vehicle_RTO_registration_number=None, vehicle_rc_number=None,
+                                                                                     vehicle_colour=None, vehicle_make_year=None,
+                                                                                     vehicle_type=None, status=4,
+                                                                                     account_verification_status=3)
+    if up_verify_state and rm_vehicle_info:
+        messages.success(request, "Vehicle Information Rejected Successfully..")
+        return redirect('handlereq', driverid)
+    else:
+        messages.error(request, "Failed to Reject the Vehicle Information,Please try again..")
+        return redirect('handlereq', driverid)    
 
 def updateRejectDocument(request, token, doc_name):
     if doc_name == "aadhar_front_photo":
@@ -704,8 +794,6 @@ def ReviewDriverDocument(request, token, driverid):
                 return render(request, 'ReviewRejectedDocs.html', {'token': token})
         else:
             return ReviewVehicleDocument(request, token, driverid)
-            messages.error(request, "Invalid Document found Please try again...")
-            return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
     else:
         return JsonResponse("Not found ....... ")
@@ -802,9 +890,76 @@ def ReviewVehicleDocument(request, token, driverid):
             messages.error(request,"Vehicle Permit  is rejected in last verification. New Document not upload by user to verify insted of rejected")
             return render(request, 'ReviewRejectedDocs.html', {'token': token})
     else:
+        return ReviewAddressDocument(request, token, driverid)
         messages.error(request, "Invalid Document found Please try again...")
         return render(request, 'ReviewRejectedDocs.html', {'token': token})
 
+# review address information
+def ReviewAddressDocument(request, token, driverid):
+    if driver_verification.objects.filter(request_token=token).exists():
+        
+        doc_state = driver_verification.objects.filter(request_token=token)
+        doc_serilizer = DriverVerificationSerializer(doc_state, many=True)
+        
+        if doc_serilizer.data[0]["is_address_verified"] == 2:
+            
+            # get all address information if verification is rejected
+            new_req_info = driver_registartion_request.objects.filter(request_token=token)
+            new_req_serilizer = DriverRegistrationRequestSerializer(new_req_info, many=True)
+
+            if bool(new_req_serilizer.data[0]["house_number"]):
+                context={'address_data':new_req_serilizer.data,'token':token}
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                return ReviewBasicInfo(request, token, driverid)     
+        else:
+            return ReviewBasicInfo(request, token, driverid)   
+    else:
+        return ReviewBasicInfo(request, token, driverid)     
+
+# ---- review Basic Information ---
+def ReviewBasicInfo(request, token, driverid):
+    if driver_verification.objects.filter(request_token=token).exists():
+       
+        doc_state = driver_verification.objects.filter(request_token=token)
+        doc_serilizer = DriverVerificationSerializer(doc_state, many=True)
+
+        if doc_serilizer.data[0]["is_basic_verified"] == 2:
+            new_req_info = driver_registartion_request.objects.filter(request_token=token)
+            new_req_serilizer = DriverRegistrationRequestSerializer(new_req_info, many=True)
+
+            if bool(new_req_serilizer.data[0]["full_name"]):
+                context={'basic_data':new_req_serilizer.data,'token':token}
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                return ReviewVehicleInfo(request, token, driverid)
+        else:
+            return ReviewVehicleInfo(request, token, driverid)       
+    else:
+        return ReviewVehicleInfo(request, token, driverid)
+
+# review vehicle document
+def ReviewVehicleInfo(request, token, driverid):
+    if driver_verification.objects.filter(request_token=token).exists():
+        doc_state = driver_verification.objects.filter(request_token=token)
+        doc_serilizer = DriverVerificationSerializer(doc_state, many=True)
+
+        if doc_serilizer.data[0]["is_vehicle_info_verified"] == 2:
+            new_req_info = driver_registartion_request.objects.filter(request_token=token)
+            new_req_serilizer = DriverRegistrationRequestSerializer(new_req_info, many=True)
+
+            if bool(new_req_serilizer.data[0]["vehicle_RTO_registration_number"]):
+                context={'vehicle_info_data':new_req_serilizer.data,'token':token}
+                return render(request, 'ReviewRejectedDocs.html', context)
+            else:
+                messages.error(request,"Invalid Request please check the documents..")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})    
+        else:
+            messages.error(request,"Invalid Request please check the documents..")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})   
+    else:
+        messages.error(request,"Invalid Request please check the documents..")
+        return render(request, 'ReviewRejectedDocs.html', {'token': token})      
 
 def getAllKYCDocByAPI(token):
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
