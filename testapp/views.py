@@ -347,6 +347,28 @@ def VerifyVehicleDocument(request,doc_name, driverid):
                 return redirect('handlereq', driverid)
         elif doc_name == "vehicle_permit":
             up_verify_state = driver_document_verification.objects.filter(request_token=token).update(is_vehicle_permit=1)
+            
+            # read verification process to update kyc verification
+            is_verification = driver_document_verification.objects.filter(request_token=token)
+            is_ver_serilizer = DriverDocumentVerificationSerializer(is_verification, many=True)
+
+            data_list = []
+            for i in is_ver_serilizer.data:
+                data_list.append(i['is_vehicle_front'])
+                data_list.append(i['is_vehicle_back'])
+                data_list.append(i['is_vehicle_left'])
+                data_list.append(i['is_vehicle_right'])
+                data_list.append(i['is_vehicle_rc'])
+                data_list.append(i['is_vehicle_insurance'])
+                data_list.append(i['is_vehicle_permit'])
+
+                
+            unique_data = (numpy.unique(data_list))
+            
+            if '2' in unique_data:print("Two is present bhai")
+            else:update_verification_state = driver_verification.objects.filter(request_token=token).update(is_vehicle_document_verified=1)
+
+
             if up_verify_state:
                 messages.success(request,"Vehicle Permit Verification Successfully...")
                 return redirect('handlereq', driverid)
@@ -608,7 +630,9 @@ def ReviewDriverDocument(request, token, driverid):
         rej_serializer = DriverRegistrationRequestSerializer(registration_data, many=True)
 
         if serilizer.data[0]["is_aadhar_front"] == "2":
+            # check document is not empty
             if bool(rej_serializer.data[0]["aadhaar_front_photo"]):
+                # to get new uploaded document
                 dataa = getAllKYCDocByAPI(token)
                 context = {
                     'finaldata': dataa[0]['aadhar_front_photo'],
@@ -687,7 +711,100 @@ def ReviewDriverDocument(request, token, driverid):
         return JsonResponse("Not found ....... ")
 
 def ReviewVehicleDocument(request, token, driverid):
-    return JsonResponse("Review called", safe=False)
+    rej_docs = driver_document_verification.objects.filter(request_token=token)
+    serilizer = DriverDocumentVerificationSerializer(rej_docs, many=True)
+
+    request_docs = driver_registartion_request.objects.filter(request_token=token)
+    req_serilizer = DriverRegistrationRequestSerializer(request_docs, many=True)
+   
+    if serilizer.data[0]["is_vehicle_front"] == "2":
+        if bool(req_serilizer.data[0]["vehicle_front_photo"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_front_photo'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Front Photo"
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Front photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_back"] == "2":
+        if bool(req_serilizer[0]["vehicle_back_photo"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_back_photo'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Back Photo"
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Back photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_left"]:
+        if bool(req_serilizer.data[0]["vehicle_left_photo"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_left_photo'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Left Photo"
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Left photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_right"] == "2":
+        if bool(req_serilizer.data[0]["vehicle_right_photo"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_right_photo'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Right Photo"
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Right photo is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_rc"]:
+        if bool(req_serilizer.data[0]["vehicle_rc"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_rc'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle RC "
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle RC  is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_insurance"] == "2":
+        if bool(req_serilizer.data[0]["vehicle_insurance"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_insurance'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Insurance "
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Insurance  is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    elif serilizer.data[0]["is_vehicle_permit"] == "2":
+        if bool(req_serilizer.data[0]["vehicle_permit"]):
+            dataa = getAllKYCDocByAPI(token)
+            context = {
+                    'finaldata': dataa[0]['vehicle_permit'],
+                    'token': token,
+                    'tag': "New upload document : Vehicle Permit "
+                }
+            return render(request, 'ReviewRejectedDocs.html', context)
+        else:
+            messages.error(request,"Vehicle Permit  is rejected in last verification. New Document not upload by user to verify insted of rejected")
+            return render(request, 'ReviewRejectedDocs.html', {'token': token})
+    else:
+        messages.error(request, "Invalid Document found Please try again...")
+        return render(request, 'ReviewRejectedDocs.html', {'token': token})
+
 
 def getAllKYCDocByAPI(token):
     url = f"http://3.7.18.55/api/getKYCRequestdInfo?request_token={token}"
