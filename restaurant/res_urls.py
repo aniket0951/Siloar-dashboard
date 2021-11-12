@@ -15,7 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from restaurant.views import ShowRestaurantReq
+from restaurant.views import ShowRestaurantReq, HandleRestaurantReq, VerifyOwnerDetails, VerifyRestaurantDetails, \
+                             VerifyRestaurantDocuments, RejectOwnerDetails, ReviewOwnerDetails 
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -23,5 +24,24 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
 
                   # -- to show restaurant request -
-                  path('ShowRestaurantReq', ShowRestaurantReq, name="showRestaurantReq")
+                  path('ShowRestaurantReq', ShowRestaurantReq, name="showRestaurantReq"),
+
+                  # -- handle restaurant request -- 
+                  path('HandleRestaurantReq/<int:res_id>/', HandleRestaurantReq, name="handleRestaurantReq"),
+
+                  # --- verify owner details ---
+                  path('VerifyOwnerDetails/<int:res_id>/', VerifyOwnerDetails, name='verifyOwnerDetails'),
+
+                  # --- verify restaurant details ---
+                  path('VerifyRestaurantDetails/<int:res_id>/', VerifyRestaurantDetails, name='verifyRestaurantDetails'),
+
+                  # --- verify restaurant document details ---
+                  path('VerifyRestaurantDocuments/<str:doc_name>/<int:res_id>/', VerifyRestaurantDocuments, name='verifyRestaurantDocuments'),
+
+                  # --- reject owner details ---
+                  path('RejectOwnerDetails/<int:res_id>/', RejectOwnerDetails, name="rejectOwnerDetails"),
+
+                  # --- review owner details ---
+                  path('ReviewOwnerDetails/<str:token>/', ReviewOwnerDetails, name='reviewOwnerDetails')
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -135,6 +135,7 @@
                   style="padding-bottom: 3%"
                   id="new"
                 >
+                {% if new_req %}
                   <div class="table_card" id="menu3">
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -142,7 +143,6 @@
                           <th scope="col">Sr.No</th>
                           <th scope="col">Name</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Date of Birth</th>
                           <th scope="col">Email</th>
                           <th scope="col">Address</th>
                           <th scope="col">Mobile Number</th>
@@ -152,20 +152,19 @@
                       </thead>
                       <tbody>
                         <!-- for driver request -->
-                        {% for i in data %}
+                        {% for i in new_req %}
                         <tr>
                           <td>&nbsp;</td>
-                          <td class="table_body_text">{{i.full_name}}</td>
+                          <td class="table_body_text">{{i.owner_name}}</td>
                           <td style="color: green; font-weight: bold">New</td>
-                          <td class="table_body_text">{{i.date_of_birth }}</td>
-                          <td class="table_body_text">{{i.email}}</td>
+                          <td class="table_body_text">{{i.owner_email}}</td>
                           <td class="table_body_text">
-                            {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                            {{i.owner_current_address}}
                           </td>
-                          <td class="table_body_text">{{i.contact_number}}</td>
+                          <td class="table_body_text">{{i.owner_contact_no}}</td>
                           <td style="color: red">Not Verified</td>
                           <td class="table_body_text">
-                            <a href="{% url 'handlereq' i.id %}" style="text-decoration:none">
+                            <a href="{% url 'handleRestaurantReq' i.id %}" style="text-decoration:none">
                               <p id="rcorners1" class="button">Handle</p>
                             </a>
                           </td>
@@ -174,6 +173,9 @@
                       </tbody>
                     </table>
                   </div>
+                {% else %}
+                <h1>Sorry We Don't have any new request at this time</h1>  
+                {% endif %}  
                 </div>
       
                 <!-- Inprogress -->
@@ -182,6 +184,7 @@
                   style="padding-bottom: 3%"
                   id="progress"
                 >
+                {% if in_progress_req %}
                   <div class="table_card" id="menu3">
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -189,7 +192,6 @@
                           <th scope="col">Sr.No</th>
                           <th scope="col">Name</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Date of Birth</th>
                           <th scope="col">Email</th>
                           <th scope="col">Address</th>
                           <th scope="col">Mobile Number</th>
@@ -199,20 +201,19 @@
                       </thead>
                       <tbody>
                         <!-- for driver request -->
-                        {% for i in inprogress_data %}
+                        {% for i in in_progress_req %}
                         <tr>
                           <td>&nbsp;</td>
-                          <td>{{i.full_name}}</td>
-                          <td style="color: #f1ae28">Inprogress</td>
-                          <td>{{i.date_of_birth }}</td>
-                          <td>{{i.email}}</td>
-                          <td>
-                            {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                          <td class="table_body_text">{{i.owner_name}}</td>
+                          <td style="color: green; font-weight: bold">New</td>
+                          <td class="table_body_text">{{i.owner_email}}</td>
+                          <td class="table_body_text">
+                            {{i.owner_current_address}}
                           </td>
-                          <td>{{i.contact_number}}</td>
-                          <td style="color: #f1ae28">Reviewing</td>
-                          <td>
-                            <a href="{% url 'handlereq' i.id %}" style="text-decoration:none">
+                          <td class="table_body_text">{{i.owner_contact_no}}</td>
+                          <td style="color: red">Not Verified</td>
+                          <td class="table_body_text">
+                            <a href="{% url 'handleRestaurantReq' i.id %}" style="text-decoration:none">
                               <p id="rcorners1" class="button">Process</p>
                             </a>
                           </td>
@@ -221,6 +222,9 @@
                       </tbody>
                     </table>
                   </div>
+                {% else %}
+                <h1>Sorry we don't have any In-Progress Request</h1>  
+                {% endif %}  
                 </div>
       
                 <!-- Verified -->
@@ -229,6 +233,7 @@
                   style="padding-bottom: 3%"
                   id="verified"
                 >
+                {% if verified_req %}
                   <div class="table_card" id="menu3">
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -236,7 +241,6 @@
                           <th scope="col">Sr.No</th>
                           <th scope="col">Name</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Date of Birth</th>
                           <th scope="col">Email</th>
                           <th scope="col">Address</th>
                           <th scope="col">Mobile Number</th>
@@ -245,23 +249,25 @@
                       </thead>
                       <tbody>
                         <!-- for driver request -->
-                        {% for i in verifyed_data %}
+                        {% for i in verified_req %}
                         <tr>
                           <td>&nbsp;</td>
-                          <td>{{i.full_name}}</td>
+                          <td>{{i.owner_name}}</td>
                           <td style="color: #9647d6">Close</td>
-                          <td>{{i.date_of_birth }}</td>
-                          <td>{{i.email}}</td>
+                          <td>{{i.owner_email}}</td>
                           <td>
-                            {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                            {{i.owner_current_address}}
                           </td>
-                          <td>{{i.contact_number}}</td>
+                          <td>{{i.owner_contact_no}}</td>
                           <td style="color: #24d52a">Verified</td>
                         </tr>
                         {% endfor %}
                       </tbody>
                     </table>
                   </div>
+                {% else %}
+                <h1>Sorry We Don't Have Any Verified Request</h1>  
+                {% endif %}  
                 </div>
       
                 <!-- Rejected -->
@@ -270,6 +276,7 @@
                   style="padding-bottom: 3%"
                   id="rejected"
                 >
+                {% if reject_req %}
                   <div class="table_card" id="menu3">
                     <table class="table table-striped">
                       <thead class="thead-dark">
@@ -277,7 +284,6 @@
                           <th scope="col">Sr.No</th>
                           <th scope="col">Name</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Date of Birth</th>
                           <th scope="col">Email</th>
                           <th scope="col">Address</th>
                           <th scope="col">Mobile Number</th>
@@ -287,21 +293,19 @@
                       </thead>
                       <tbody>
                         <!-- for driver request -->
-                        {% for i in reject_data %}
+                        {% for i in reject_req %}
                           <tr>
                             <td>&nbsp;</td>
-                            <td>{{i.full_name}}</td>
+                            <td>{{i.owner_name}}</td>
                             <td style="color: red">Rejected</td>
-                            <td>{{i.date_of_birth }}</td>
-                            <td>{{i.email}}</td>
+                            <td>{{i.owner_email}}</td>
                             <td>
-                              {{i.house_number|add:i.building_name|add:i.street_name|add:i.landmark}}
+                              {{i.owner_current_address}}
                             </td>
-                            
-                            <td>{{i.contact_number}}</td>
+                            <td>{{i.owner_contact_no}}</td>
                             <td style="color: red">Non-Verified</td>
                             <td>
-                              <a href="{% url 'reviewDriverDocument' i.request_token i.id %}">
+                              <a href="{% url 'reviewOwnerDetails' i.request_token %}">
                                 <p id="rcorners1" class="button">Review</p>
                               </a>
                             </td>
@@ -310,6 +314,9 @@
                       </tbody>
                     </table>
                   </div>
+                {% else %}
+                <h1>Sorry We Don't Have Any Rejected Request</h1>
+                {% endif %}  
                 </div>
               </div>
             </div>

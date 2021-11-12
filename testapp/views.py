@@ -11,7 +11,8 @@ from testapp.sailor_modules.DriverRegistrationRequestModel import driver_regista
 from testapp.serilizers.sailor_serlizers import DriverRegistrationRequestSerializer, \
     DriverDocumentVerificationSerializer, DriverVerificationSerializer
 from rest_framework.decorators import api_view
-
+from restaurant.models import restaurant_registration_request
+from restaurant.Serilizer import RestaurantRegistrationRequestSerializer
 
 # Create your views here.
 @csrf_exempt

@@ -28,3 +28,24 @@ class restaurant_registration_request(models.Model):
     class Meta:
         db_table = 'restaurant_registration_request'
 
+
+# ---- restaurant verification -------
+class restaurant_verification(models.Model):
+    request_token=models.CharField(max_length=450, blank=True, null=True)
+    is_owner_verified = models.CharField(max_length=45, blank=True, null=True)
+    is_restaurant_details_verified = models.CharField(max_length=45, blank=True, null=True)
+    is_restaurant_document_verified = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        db_table = "restaurant_verification"
+
+
+# --- restaurant document verification ----- 
+class restaurant_document_verification(models.Model):
+    request_token=models.CharField(max_length=450, blank=True, null=True)
+    is_restaurant_indoor = models.CharField(max_length=45, blank=True, null=True)
+    is_restaurant_outdoor = models.CharField(max_length=45, blank=True, null=True)
+    is_restaurant_liecence = models.CharField(max_length=45, blank=True, null=True)
+
+    class Meta:
+        db_table = "restaurant_document_verification"
